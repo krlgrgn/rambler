@@ -1,0 +1,3 @@
+== Rambler
+
+This is the sister rails application to the not yet developed rambler movile application.
