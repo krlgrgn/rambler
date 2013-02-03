@@ -18,8 +18,13 @@ end
 
 gem 'jquery-rails'
 
-group :development do
-  gem 'rspec-rails'
+group :development, :test do
+  gem 'rspec-rails' # Testing framework for rails.
+  gem 'factory_girl_rails' # Replaces fixtures for feeding test data via factoires.
+end
+
+group :test do
+  gem 'faker' # Generates fake test data.
 end
 
 # To use ActiveModel has_secure_password
