@@ -58,5 +58,17 @@ module Rambler
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Generator configuration
+    config.generators do |g|
+      g.test_framework :rspec,
+        fixture: true,
+        view_specs: true,
+        helper_specs: false,
+        routing_specs: true,
+        controller_specs: true,
+        request_specs: true
+      g.fixture_replacement :factory_girl, dir: "spec/factories"
+    end
   end
 end
