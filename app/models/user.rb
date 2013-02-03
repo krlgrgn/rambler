@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   validates :last_name,  presence: true
   validates :city,       presence: true
   validates :state,      presence: true
-  validates :about,      presence: false
   validates :country,    presence: true
+  validates :about,      presence: false
 
 end
