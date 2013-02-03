@@ -20,11 +20,12 @@ gem 'jquery-rails'
 
 group :development, :test do
   gem 'rspec-rails' # Testing framework for rails.
-  gem 'factory_girl_rails' # Replaces fixtures for feeding test data via factoires.
+  gem 'factory_girl_rails' # Replaces fixtures for feeding test data via factories.
 end
 
 group :test do
   gem 'faker' # Generates fake test data.
+  gem 'capybara'
 end
 
 # To use ActiveModel has_secure_password
