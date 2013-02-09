@@ -2,7 +2,7 @@ development:
   adapter: postgresql
   database: rambler
   username: rambler
-  passowrd: rambler
+  password: rambler
   pool: 5
   timeout: 5000
 
