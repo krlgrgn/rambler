@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Users" do
   describe "User management" do
 
-    it "creates a new user and redirects to the show action" do
+    it "creates a new user and confirms it" do
       visit users_url # hits /users
       expect {
         click_link "New User"
@@ -17,6 +17,22 @@ describe "Users" do
         click_button "Save"
       }.to change(User, :count).by(1)
       page.should have_content "User was successfully created."
+    end
+    
+    it "edits a new user and redirects and confirms it" do
+      user = FactoryGirl.create(:user)
+      visit users_url
+          click_link "Edit"
+      page.should have_content "Editing user"
+    end
+
+    it "deletes a user and redirects to a page listing the users" do
+      user = FactoryGirl.create(:user)
+      visit users_url
+      expect {
+          click_link "Destroy"
+      }.to change(User, :count).by(-1)
+      page.should have_content "Listing users"
     end
   end
 end
