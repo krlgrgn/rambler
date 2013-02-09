@@ -19,11 +19,14 @@ describe "Users" do
       page.should have_content "User was successfully created."
     end
     
-    it "edits a new user and redirects and confirms it" do
+    it "edits an existing user and redirects and confirms it" do
       user = FactoryGirl.create(:user)
-      visit users_url
-          click_link "Edit"
+      visit "/users/#{user.id}"
+      click_link "Edit"
       page.should have_content "Editing user"
+      fill_in "Email", with: "lol@lol.com"
+      click_button "Save"
+      User.find(user.id).email.should eq("lol@lol.com")
     end
 
     it "deletes a user and redirects to a page listing the users" do
