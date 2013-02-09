@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b From:
+  = @adventure.from
+%p
+  %b To:
+  = @adventure.to
+%p
+  %b Departure Time:
+  = @adventure.departure_time
+
+= link_to 'Edit', edit_adventure_path(@adventure)
+\|
+= link_to 'Back', adventures_path

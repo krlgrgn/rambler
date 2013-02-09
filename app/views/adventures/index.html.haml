@@ -1,0 +1,23 @@
+%h1 Listing adventures
+
+%table
+  %tr
+    %th From
+    %th To
+    %th Departure Time
+    %th
+    %th
+    %th
+
+  - @adventures.each do |adventure|
+    %tr
+      %td= adventure.from
+      %td= adventure.to
+      %td= adventure.departure_time
+      %td= link_to 'Show', adventure
+      %td= link_to 'Edit', edit_adventure_path(adventure)
+      %td= link_to 'Destroy', adventure, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Adventure', new_adventure_path

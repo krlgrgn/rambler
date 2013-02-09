@@ -1,4 +1,7 @@
 Rambler::Application.routes.draw do
+  resources :adventures
+
+
   resources :users
 
 
