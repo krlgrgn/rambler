@@ -13,6 +13,6 @@ class User < ActiveRecord::Base
   validates :city,       presence: true
   validates :state,      presence: true
   validates :country,    presence: true
-  validates :about,      presence: false
+  validates :about,      presence: false, allow_blank: true
 
 end
