@@ -1,7 +1,14 @@
 Rambler::Application.routes.draw do
+  # This shits /
+  root to: "static_pages#home"
+
+  # Static pages.
+  match "help" => "static_pages#help"
+
+  # Adventures
   resources :adventures
 
-
+  # Users
   resources :users
 
 
