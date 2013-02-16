@@ -8,10 +8,13 @@ class CreateUsers < ActiveRecord::Migration
       t.string :state
       t.string :country
       t.string :about
+      t.string :password_digest
 
       t.timestamps
     end
 
-
+    # Add an index to the DB and enforce a unique validation
+    # on the email column
+    add_index "users", "email", :unique => true
   end
 end

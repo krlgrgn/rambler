@@ -29,8 +29,11 @@ ActiveRecord::Schema.define(:version => 20130209163523) do
     t.string   "state"
     t.string   "country"
     t.string   "about"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "password_digest"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
 
 end
