@@ -47,3 +47,5 @@ gem 'pg'
 # gem 'debugger'
 
 gem 'haml-rails'
+
+gem 'bcrypt-ruby'
