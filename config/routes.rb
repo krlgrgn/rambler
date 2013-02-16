@@ -1,5 +1,5 @@
 Rambler::Application.routes.draw do
-  # This shits /
+  # This hits /
   root to: "static_pages#home"
 
   # Static pages.
@@ -11,6 +11,8 @@ Rambler::Application.routes.draw do
   # Users
   resources :users
 
+  # Signup
+  match "signup" => "users#new"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
