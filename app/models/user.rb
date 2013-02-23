@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
-  attr_accessible :about, :city, :country, :email,
-                  :first_name, :last_name, :state,
-                  :password, :password_confirmation
+  attr_accessible :about, :city, :country, :email,:first_name,
+                  :last_name, :state, :password, :password_confirmation,
+                  :session_token
+
 
   # Validations
   validates :email,      presence: true, uniqueness: true,
@@ -20,7 +21,15 @@ class User < ActiveRecord::Base
 
   # Filters
   before_save { |user| user.email = email.downcase }
+  before_save :create_session_token
 
   # methods
   has_secure_password
+
+
+  # Private methods
+  private
+    def create_session_token
+      self.session_token = SecureRandom.urlsafe_base64
+    end
 end

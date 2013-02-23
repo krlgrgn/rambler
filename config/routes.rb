@@ -11,8 +11,13 @@ Rambler::Application.routes.draw do
   # Users
   resources :users
 
-  # Signup
+  # Sign up
   match "signup" => "users#new"
+
+  # Sign in
+  resources :sessions, only: [:new, :create, :destroy]
+  match "signin" => "sessions#new"
+  match "signout" => "sessions#destroy", via: :delete
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

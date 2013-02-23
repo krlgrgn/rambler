@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe User do
+  it {should respond_to(:session_token)}
+  
   it "has a valid factory" do
     FactoryGirl.create(:user).should be_valid
   end
@@ -72,6 +74,10 @@ describe User do
 
     it "is invalid if the password length is less than 8 characters" do
       FactoryGirl.build(:user, password: "123", password_confirmation: "123").should_not be_valid
+    end
+
+    it "creates a session token when saving a user" do
+      @user.session_token.should_not be_blank
     end
   end
 end
