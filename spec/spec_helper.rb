@@ -36,4 +36,13 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+
+  def sign_in user
+    visit signin_path
+    fill_in "Email", with: user.email
+    fill_in "Password", with: "12345678"
+    click_button "Sign in"
+  end
+
 end

@@ -34,34 +34,42 @@ describe "Users" do
     before :each do
       @user = FactoryGirl.create(:user, email: "sample@sample.com", password: "12345678", password_confirmation: "12345678")
       visit root_path
- 
-      page.should have_link("Sign in")    
-
-      visit signin_path
-      fill_in "Email", with: @user.email
-      fill_in "Password", with: "12345678"
-      click_button "Sign in"
     end
 
     it "signs in a user" do
-      
       @user.session_token.should_not be_empty
-
+      sign_in @user
       page.should have_content "Sign out"
       page.should_not have_content "Sign in"
     end
 
     it "signs out a user" do
+      sign_in @user
       click_link "Sign out"
       page.should_not have_content "Sign out"
       page.should have_content "Sign in"
+    end
+
+    describe "authorisation" do
+      let(:user) { FactoryGirl.create(:user) }
+
+
+      describe "for non-signed in users" do
+
+        describe "visiting the edit page" do
+          before { visit edit_user_path(user) }
+          it "should have a sign in link" do
+            page.should have_content "Sign in"
+          end
+        end
+      end
     end
   end
 
   describe "User management" do
     before :each do
       @user = FactoryGirl.create(:user)
-      @user.authenticate(@user)
+      sign_in @user
     end
 
     it "edits an existing user and redirects and confirms it" do
@@ -69,17 +77,18 @@ describe "Users" do
       click_link "Edit"
       page.should have_content "Editing user"
       fill_in "Email", with: "lol@lol.com"
+      fill_in "Password", with: "12345678"
+      fill_in "Confirmation", with: "12345678"
       click_button "Save"
       User.find(@user.id).email.should eq("lol@lol.com")
     end
 
     it "deletes a user and redirects to a page listing the users" do
-      visit users_url
+      visit users_path
       expect {
           click_link "Destroy"
       }.to change(User, :count).by(-1)
       page.should have_content "Listing users"
     end
   end
-
 end

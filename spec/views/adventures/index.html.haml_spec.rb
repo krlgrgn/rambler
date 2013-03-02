@@ -7,11 +7,6 @@ describe "adventures/index" do
         :from => "From",
         :to => "To",
         :departure_time => "Departure Time"
-      ),
-      stub_model(Adventure,
-        :from => "From",
-        :to => "To",
-        :departure_time => "Departure Time"
       )
     ])
   end
@@ -19,8 +14,8 @@ describe "adventures/index" do
   it "renders a list of adventures" do
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "td", :text => "From".to_s, :count => 2
-    assert_select "td", :text => "To".to_s, :count => 2
-    assert_select "td", :text => "Departure Time".to_s, :count => 2
+    assert_select "td", :text => "From", :count => 1
+    assert_select "td", :text => "To", :count => 1
+    assert_select "td", :text => "Departure Time".to_s, :count => 1
   end
 end
