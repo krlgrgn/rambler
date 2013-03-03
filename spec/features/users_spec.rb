@@ -53,39 +53,66 @@ describe "Users" do
     describe "authorisation" do
       let(:user) { FactoryGirl.create(:user) }
 
-
-      describe "for non-signed in users" do
+      context "for non-signed in users" do
 
         describe "visiting the edit page" do
           before { visit edit_user_path(user) }
+
           it "should have a sign in link" do
             page.should have_content "Sign in"
+
           end
         end
+
       end
 
-      describe "for a signed in user" do
-        pending "write test for editing a users information."
+      context "for a signed in user" do
+        before :each do
+          sign_in @user
+        end
+
+        context "as the incorrect user" do
+
+          describe "editing a users information"
+
+          it "redirects to the root page when the user tries to edit another user\'s information" do
+              page.should have_content "Sign out"
+              wrong_user = FactoryGirl.create(:user, email: "wrongemail@sample.com")
+              visit user_path(wrong_user) # Hits /users/:id
+              click_link "Edit"
+
+              # Verify
+              page.should have_content("home")
+            end
+
+          end
+
+          context "as the correct user" do
+
+            describe "editing a users information"
+
+              it "redirects to the users page after a succesful edit" do
+                page.should have_content "Sign out"
+                visit user_path(@user) # Hits /users/:id
+                click_link "Edit"
+                page.should have_content "Editing user"
+                fill_in "Email", with: "lol@lol.com"
+                fill_in "Password", with: "12345678"
+                fill_in "Confirmation", with: "12345678"
+                click_button "Save"
+
+                # Verify
+                User.find(@user.id).email.should eq("lol@lol.com")
+              end
+
+            end
+          end
       end
-    end
   end
 
   describe "User management" do
     before :each do
       @user = FactoryGirl.create(:user, password: "12345678", password_confirmation: "12345678")
-    end
-
-    it "edits an existing user and redirects and confirms it" do
-      sign_in @user
-      page.should have_content "Sign out"
-      visit user_path(@user) # Hits /users/:id
-      click_link "Edit"
-      page.should have_content "Editing user"
-      fill_in "Email", with: "lol@lol.com"
-      fill_in "Password", with: "12345678"
-      fill_in "Confirmation", with: "12345678"
-      click_button "Save"
-      User.find(@user.id).email.should eq("lol@lol.com")
     end
 
     it "deletes a user and redirects to a page listing the users" do
