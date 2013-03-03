@@ -112,46 +112,37 @@ describe UsersController do
     end
     describe "with valid params" do
       it "updates the requested user" do
-        user = User.create! valid_attributes
         # Assuming there are no other users in the database, this
         # specifies that the User created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        User.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
-        put :update, {:id => user.to_param, :user => { "these" => "params" }}
+        User.any_instance.should_receive(:update_attributes).with({ "state" => "a state" })
+        put :update, {:id => @user.to_param, :user => { "state" => "a state" }}
       end
 
       it "assigns the requested user as @user" do
-        user = User.create! valid_attributes
-        user.authenticate(user.password)
-        put :update, {:id => user.to_param, :user => valid_attributes}
-        assigns(:user).should eq(user)
+        put :update, {:id => @user.to_param, :user => valid_attributes}
+        assigns(:user).should eq(@user)
       end
 
       it "redirects to the user" do
-        user = User.create! valid_attributes
-        user.authenticate(user.password)
-        put :update, {:id => user.to_param, :user => valid_attributes}
-        response.should redirect_to(user)
+        put :update, {:id => @user.to_param, :user => valid_attributes}
+        response.should redirect_to(@user)
       end
     end
 
     describe "with invalid params" do
       it "assigns the user as @user" do
-        user = User.create! valid_attributes
-        user.authenticate(user.password)
         # Trigger the behavior that occurs when invalid params are submitted
         User.any_instance.stub(:save).and_return(false)
-        put :update, {:id => user.to_param, :user => {  }}
-        assigns(:user).should eq(user)
+        put :update, {:id => @user.to_param, :user => {  }}
+        assigns(:user).should eq(@user)
       end
 
       it "re-renders the 'edit' template" do
-        user = User.create! valid_attributes
-        user.authenticate(user.password)
         # Trigger the behavior that occurs when invalid params are submitted
         User.any_instance.stub(:save).and_return(false)
-        put :update, {:id => user.to_param, :user => {  }}
+        put :update, {:id => @user.to_param, :user => {  }}
         response.should render_template("edit")
       end
     end

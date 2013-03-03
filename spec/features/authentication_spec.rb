@@ -16,7 +16,7 @@ describe "Authentication" do
       click_button "Sign in"
     end
 
-    it "does not sign in a user iwth invalid credentials" do
+    it "does not sign in a user with invalid credentials" do
       visit signin_path # Hits /signin
       click_button "Sign in"
       page.should_not have_content "Logout"
