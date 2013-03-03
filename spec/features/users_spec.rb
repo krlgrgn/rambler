@@ -63,17 +63,22 @@ describe "Users" do
           end
         end
       end
+
+      describe "for a signed in user" do
+        pending "write test for editing a users information."
+      end
     end
   end
 
   describe "User management" do
     before :each do
-      @user = FactoryGirl.create(:user)
-      sign_in @user
+      @user = FactoryGirl.create(:user, password: "12345678", password_confirmation: "12345678")
     end
 
     it "edits an existing user and redirects and confirms it" do
-      visit user_path(@user) # Hits /users
+      sign_in @user
+      page.should have_content "Sign out"
+      visit user_path(@user) # Hits /users/:id
       click_link "Edit"
       page.should have_content "Editing user"
       fill_in "Email", with: "lol@lol.com"

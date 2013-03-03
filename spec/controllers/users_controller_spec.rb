@@ -37,8 +37,7 @@ describe UsersController do
   describe "GET index" do
     it "assigns all users as @users" do
       user = User.create! valid_attributes
-      user.authenticate(user.password)
-      get :index, {}, valid_session
+      get :index, {}
       assigns(:users).should eq([user])
     end
   end
@@ -46,25 +45,25 @@ describe UsersController do
   describe "GET show" do
     it "assigns the requested user as @user" do
       user = User.create! valid_attributes
-      user.authenticate(user.password)
       get :show, {:id => user.to_param}, valid_session
-      assigns(:user).should eq(user)
     end
   end
 
   describe "GET new" do
     it "assigns a new user as @user" do
       get :new, {}, valid_session
-      assigns(:user).should be_a_new(User)
     end
   end
 
   describe "GET edit" do
+    before :each do
+      @user = User.create! valid_attributes
+      sign_in @user
+      cookies['session_token'] = @user.session_token
+    end
     it "assigns the requested user as @user" do
-      user = User.create! valid_attributes
-      user.authenticate(user.password)
-      get :edit, {:id => user.to_param}, valid_session
-      assigns(:user).should eq(user)
+      get :edit, {:id => @user.to_param}
+      assigns(:user).should eq(@user)
     end
   end
 
@@ -106,29 +105,33 @@ describe UsersController do
   end
 
   describe "PUT update" do
+    before :each do
+      @user = User.create! valid_attributes
+      sign_in @user
+      cookies['session_token'] = @user.session_token
+    end
     describe "with valid params" do
       it "updates the requested user" do
         user = User.create! valid_attributes
-        user.authenticate(user.password)
         # Assuming there are no other users in the database, this
         # specifies that the User created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         User.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
-        put :update, {:id => user.to_param, :user => { "these" => "params" }}, valid_session
+        put :update, {:id => user.to_param, :user => { "these" => "params" }}
       end
 
       it "assigns the requested user as @user" do
         user = User.create! valid_attributes
         user.authenticate(user.password)
-        put :update, {:id => user.to_param, :user => valid_attributes}, valid_session
+        put :update, {:id => user.to_param, :user => valid_attributes}
         assigns(:user).should eq(user)
       end
 
       it "redirects to the user" do
         user = User.create! valid_attributes
         user.authenticate(user.password)
-        put :update, {:id => user.to_param, :user => valid_attributes}, valid_session
+        put :update, {:id => user.to_param, :user => valid_attributes}
         response.should redirect_to(user)
       end
     end
@@ -139,7 +142,7 @@ describe UsersController do
         user.authenticate(user.password)
         # Trigger the behavior that occurs when invalid params are submitted
         User.any_instance.stub(:save).and_return(false)
-        put :update, {:id => user.to_param, :user => {  }}, valid_session
+        put :update, {:id => user.to_param, :user => {  }}
         assigns(:user).should eq(user)
       end
 
@@ -148,7 +151,7 @@ describe UsersController do
         user.authenticate(user.password)
         # Trigger the behavior that occurs when invalid params are submitted
         User.any_instance.stub(:save).and_return(false)
-        put :update, {:id => user.to_param, :user => {  }}, valid_session
+        put :update, {:id => user.to_param, :user => {  }}
         response.should render_template("edit")
       end
     end

@@ -7,5 +7,8 @@ describe "Users" do
       get users_path
       response.status.should be(200)
     end
+
+    pending "Write a test for redirecting to signin in page for non signed in users"
+    pending "Write a test for signed in users editing information"
   end
 end
