@@ -33,7 +33,10 @@ module SessionsHelper
     @current_user ||= User.find_by_session_token(cookies[:session_token])
   end
 
-
+  #
+  # Returns trur of false depending on whether the user passed to the
+  # method is the currently lsigned in user.
+  #
   def current_user?(user)
     user == current_user
   end
@@ -43,5 +46,22 @@ module SessionsHelper
   #
   def signed_in?
     !current_user.nil?
+  end
+
+  #
+  # Store the url of the last request the user made in
+  # the rails session.
+  #
+  def store_location
+    session[:return_to] = request.url
+  end
+
+  #
+  # Redirect back to the previous page or then the
+  # default.
+  #
+  def redirect_back_or(default)
+    redirect_to(session[:return_to] || default)
+    session.delete(:return_to)
   end
 end

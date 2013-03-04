@@ -105,8 +105,26 @@ describe "Users" do
                 User.find(@user.id).email.should eq("lol@lol.com")
               end
 
-            end
           end
+        end
+      end
+
+      context "for a non-signed user" do
+
+        describe "attempting to access a protected page" do
+          before :each do
+            visit edit_user_path(@user)
+            fill_in "Email", with: @user.email
+            fill_in "Password", with:  @user.password
+            click_button "Sign in"
+          end
+
+          it "should render the desired page after signin in" do
+            page.should have_content "Editing user"
+          end
+
+        end
+
       end
   end
 

@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     if user and user.authenticate(params[:session][:password])
       # Sign in the user.
       sign_in user
-      redirect_to user
+      redirect_back_or user
     else
       render 'new'
     end
