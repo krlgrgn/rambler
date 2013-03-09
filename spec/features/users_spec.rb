@@ -64,6 +64,13 @@ describe "Users" do
           end
         end
 
+        describe "listing other users" do
+          it "should have a sign in link" do
+            visit users_path
+            page.should have_content "Sign in"
+          end
+        end
+
       end
 
       context "for a signed in user" do
@@ -71,61 +78,69 @@ describe "Users" do
           sign_in @user
         end
 
+        describe "listing other users" do
+          it "says listing users" do
+            visit users_path
+            page.should have_content "Listing users"
+          end
+        end
+
         context "as the incorrect user" do
 
           describe "editing a users information"
 
           it "redirects to the root page when the user tries to edit another user\'s information" do
+            page.should have_content "Sign out"
+            wrong_user = FactoryGirl.create(:user, email: "wrongemail@sample.com")
+            visit user_path(wrong_user) # Hits /users/:id
+            click_link "Edit"
+
+            # Verify
+            page.should have_content("home")
+          end
+
+        end
+
+        context "as the correct user" do
+
+          describe "editing a users information"
+
+            it "redirects to the users page after a succesful edit" do
               page.should have_content "Sign out"
-              wrong_user = FactoryGirl.create(:user, email: "wrongemail@sample.com")
-              visit user_path(wrong_user) # Hits /users/:id
+              visit user_path(@user) # Hits /users/:id
               click_link "Edit"
+              page.should have_content "Editing user"
+              fill_in "Email", with: "lol@lol.com"
+              fill_in "Password", with: "12345678"
+              fill_in "Confirmation", with: "12345678"
+              click_button "Save"
 
               # Verify
-              page.should have_content("home")
+              User.find(@user.id).email.should eq("lol@lol.com")
             end
 
           end
-
-          context "as the correct user" do
-
-            describe "editing a users information"
-
-              it "redirects to the users page after a succesful edit" do
-                page.should have_content "Sign out"
-                visit user_path(@user) # Hits /users/:id
-                click_link "Edit"
-                page.should have_content "Editing user"
-                fill_in "Email", with: "lol@lol.com"
-                fill_in "Password", with: "12345678"
-                fill_in "Confirmation", with: "12345678"
-                click_button "Save"
-
-                # Verify
-                User.find(@user.id).email.should eq("lol@lol.com")
-              end
-
-          end
         end
-      end
 
-      context "for a non-signed user" do
+    end
 
-        describe "attempting to access a protected page" do
-          before :each do
-            visit edit_user_path(@user)
-            fill_in "Email", with: @user.email
-            fill_in "Password", with:  @user.password
-            click_button "Sign in"
-          end
+    context "for a non-signed user" do
 
-          it "should render the desired page after signin in" do
-            page.should have_content "Editing user"
-          end
+      describe "attempting to access a protected page" do
+        before :each do
+          visit edit_user_path(@user)
+          fill_in "Email", with: @user.email
+          fill_in "Password", with:  @user.password
+          click_button "Sign in"
+        end
 
+        it "should render the desired page after signin in" do
+          page.should have_content "Editing user"
         end
 
       end
+
+    end
   end
 
   describe "User management" do
@@ -136,9 +151,9 @@ describe "Users" do
     it "deletes a user and redirects to a page listing the users" do
       visit users_path
       expect {
-          click_link "Destroy"
+        click_link "Destroy"
       }.to change(User, :count).by(-1)
-      page.should have_content "Listing users"
+      #page.should have_content "Listing users"
     end
   end
 end

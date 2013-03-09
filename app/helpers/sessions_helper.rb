@@ -18,7 +18,7 @@ module SessionsHelper
   end
 
   #
-  # current user mutator method.
+  # current_user mutator method.
   #
   def current_user=(user)
     @current_user = user
