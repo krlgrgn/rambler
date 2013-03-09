@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe User do
   it {should respond_to(:session_token)}
-  
+
   it "has a valid factory" do
     FactoryGirl.create(:user).should be_valid
   end
@@ -55,6 +55,21 @@ describe User do
 
   it "is invalid if password is not present" do
     FactoryGirl.build(:user, password: " ", password_confirmation: " ").should_not be_valid
+  end
+
+  it "is invald if a user is create with admin as a parameter" do
+    FactoryGirl.build(:user).admin.should be_nil
+  end
+
+  describe "with admin attr set to true" do
+    before :each do
+      @user = FactoryGirl.create(:user)
+    end
+
+    it "should be an administrator" do
+      @user.toggle!(:admin)
+      @user.reload.admin.should eq true
+    end
   end
 
   # User authentication

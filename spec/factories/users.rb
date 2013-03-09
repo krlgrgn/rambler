@@ -12,5 +12,9 @@ FactoryGirl.define do
     f.about                    { Faker::Lorem.sentence }
     f.password                 { PASSWORD }
     f.password_confirmation    { PASSWORD }
+
+    factory :admin do
+      admin true
+    end
   end
 end

@@ -10,6 +10,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :about
       t.string :password_digest
       t.string :session_token
+      t.boolean :admin
 
       t.timestamps
     end

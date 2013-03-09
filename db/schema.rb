@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20130209163523) do
     t.string   "about"
     t.string   "password_digest"
     t.string   "session_token"
+    t.boolean  "admin"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
