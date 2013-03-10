@@ -37,6 +37,8 @@ describe UsersController do
   describe "GET index" do
     it "assigns all users as @users" do
       user = User.create! valid_attributes
+      sign_in user
+      cookies['session_token'] = user.session_token
       get :index, {}
       assigns(:users).should eq([user])
     end

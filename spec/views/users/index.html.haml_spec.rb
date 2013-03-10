@@ -6,6 +6,9 @@ describe "users/index" do
       stub_model(User),
       stub_model(User)
     ])
+
+    user = stub_model(User)
+    template.stub!(:current_user).and_return(user)
   end
 
   it "renders a list of users" do
