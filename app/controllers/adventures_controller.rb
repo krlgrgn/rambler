@@ -1,4 +1,7 @@
 class AdventuresController < ApplicationController
+  before_filter :signed_in_user, only: [:index, :edit, :update]
+  before_filter :correct_user, only: [:edit, :update]
+
   # GET /adventures
   # GET /adventures.json
   def index
@@ -40,7 +43,7 @@ class AdventuresController < ApplicationController
   # POST /adventures
   # POST /adventures.json
   def create
-    @adventure = Adventure.new(params[:adventure])
+    @adventure = Adventure.new(params[:adventure].merge({user_id: params[:user_id]}))
 
     respond_to do |format|
       if @adventure.save
@@ -59,7 +62,7 @@ class AdventuresController < ApplicationController
     @adventure = Adventure.find(params[:id])
 
     respond_to do |format|
-      if @adventure.update_attributes(params[:adventure])
+      if @adventure.update_attributes(params[:adventure].merge({user_id: params[:user_id]}))
         format.html { redirect_to @adventure, notice: 'Adventure was successfully updated.' }
         format.json { head :no_content }
       else
@@ -80,4 +83,17 @@ class AdventuresController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+    def signed_in_user
+      if !signed_in?
+        store_location
+        redirect_to signin_path, notice: "Please sign in."
+      end
+    end
+
+    def correct_user
+      user = User.find(params[:user_id])
+      redirect_to root_path if !current_user?(user)
+    end
 end
