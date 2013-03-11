@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(:version => 20130209163523) do
     t.string   "from"
     t.string   "to"
     t.datetime "departure_time"
+    t.integer  "user_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
