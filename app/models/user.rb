@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :about, :city, :country, :email,:first_name,
+  attr_accessible :about, :city, :country, :email, :first_name,
                   :last_name, :state, :password, :password_confirmation,
                   :session_token
 
@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   validates :email,      presence: true, uniqueness: true,
                          format: {
                                    with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/,
-                                   message: "Invalid emaill address."
+                                   message: "Invalid email address."
                          }
   validates :first_name,            presence: true
   validates :last_name,             presence: true
@@ -23,7 +23,10 @@ class User < ActiveRecord::Base
   before_save { |user| user.email = email.downcase }
   before_save :create_session_token
 
-  # methods
+  # Relations
+  has_many :adventures
+
+  # Methods
   has_secure_password
 
 
