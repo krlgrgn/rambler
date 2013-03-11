@@ -141,7 +141,7 @@ describe "Users" do
           click_link "Edit"
 
           # Verify
-          page.should have_content("home")
+          page.should have_content("StaticPages#home")
         end
       end
 
