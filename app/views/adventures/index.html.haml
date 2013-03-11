@@ -15,7 +15,7 @@
       %td= adventure.to
       %td= adventure.departure_time
       %td= link_to 'Show', adventure
-      %td= link_to 'Edit', edit_adventure_path(adventure)
+      %td= link_to 'Edit', edit_adventure_path(id: adventure.id, user_id: adventure.user.id)
       %td= link_to 'Destroy', adventure, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br

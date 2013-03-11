@@ -7,6 +7,8 @@
           %li= msg
 
   .field
+    = hidden_field_tag :user_id, current_user.id
+  .field
     = f.label :from
     = f.text_field :from
   .field
