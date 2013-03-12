@@ -75,18 +75,18 @@ describe AdventuresController do
     describe "with valid params" do
       it "creates a new Adventure" do
         expect {
-          post :create, {:adventure => valid_attributes}, valid_session
+          post :create, {:adventure => valid_attributes.except(:user_id), :user_id => @user.id}
         }.to change(Adventure, :count).by(1)
       end
 
       it "assigns a newly created adventure as @adventure" do
-        post :create, {:adventure => valid_attributes}, valid_session
+        post :create, {:adventure => valid_attributes.except(:user_id), :user_id => @user.id}
         assigns(:adventure).should be_a(Adventure)
         assigns(:adventure).should be_persisted
       end
 
       it "redirects to the created adventure" do
-        post :create, {:adventure => valid_attributes}, valid_session
+        post :create, {:adventure => valid_attributes.except(:user_id), :user_id => @user.id}
         response.should redirect_to(Adventure.last)
       end
     end
@@ -122,7 +122,7 @@ describe AdventuresController do
 
       it "assigns the requested adventure as @adventure" do
         adventure = Adventure.create! valid_attributes
-        put :update, {:id => adventure.to_param, :adventure => valid_attributes, :user_id => @user.id}, valid_session
+       put :update, {:id => adventure.to_param, :adventure => valid_attributes, :user_id => @user.id}
         assigns(:adventure).should eq(adventure)
       end
 

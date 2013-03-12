@@ -5,8 +5,9 @@ describe "adventures/new" do
     assign(:adventure, stub_model(Adventure,
       :from => "MyString",
       :to => "MyString",
-      :departure_time => "MyString"
+      :departure_time => "MyString",
     ).as_new_record)
+    view.stub!(:current_user).and_return(stub_model(User, :id => 1))
   end
 
   it "renders new adventure form" do
@@ -17,6 +18,7 @@ describe "adventures/new" do
       assert_select "input#adventure_from", :name => "adventure[from]"
       assert_select "input#adventure_to", :name => "adventure[to]"
       assert_select "input#adventure_departure_time", :name => "adventure[departure_time]"
+      assert_select "input#user_id", :name => "user_id"
     end
   end
 end
