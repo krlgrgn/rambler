@@ -62,7 +62,7 @@ class AdventuresController < ApplicationController
     @adventure = Adventure.find(params[:id])
 
     respond_to do |format|
-      if @adventure.update_attributes(params[:adventure].merge({user_id: params[:user_id]}))
+      if @adventure.update_attributes(params[:adventure])
         format.html { redirect_to @adventure, notice: 'Adventure was successfully updated.' }
         format.json { head :no_content }
       else
