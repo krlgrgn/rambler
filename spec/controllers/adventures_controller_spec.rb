@@ -156,13 +156,13 @@ describe AdventuresController do
     it "destroys the requested adventure" do
       adventure = Adventure.create! valid_attributes
       expect {
-        delete :destroy, {:id => adventure.to_param}, valid_session
+        delete :destroy, {:id => adventure.to_param, :user_id => @user.id}, valid_session
       }.to change(Adventure, :count).by(-1)
     end
 
     it "redirects to the adventures list" do
       adventure = Adventure.create! valid_attributes
-      delete :destroy, {:id => adventure.to_param}, valid_session
+      delete :destroy, {:id => adventure.to_param, :user_id => @user.id}, valid_session
       response.should redirect_to(adventures_url)
     end
   end

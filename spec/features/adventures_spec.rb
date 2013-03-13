@@ -120,6 +120,10 @@ describe "Adventures" do
           @adventure = FactoryGirl.create(:adventure, user: @user)
           visit adventures_path # hits /adventures
         end
+        it "allows the user to destroy an adventure" do
+          visit adventures_path # hits /adventures
+          expect { click_link "Destroy" }.to change(Adventure, :count).by(-1)
+        end
       end
       context "as the incorrect user" do
         before :each do
@@ -127,10 +131,8 @@ describe "Adventures" do
           visit adventures_path # hits /adventures
         end
         it "does not allow the user to delete another users" do
-          expect { click_link "Destroy"
-          }.to change(Adventure, :count).by(0)
-
-         page.should have_content "StaticPages#home"
+          expect { click_link "Destroy"}.to change(Adventure, :count).by(0)
+          page.should have_content "StaticPages#home"
         end
       end
       context "administrator" do
@@ -141,7 +143,7 @@ describe "Adventures" do
         end
         it "allows the admin to destroy an adventure" do
           visit adventures_path # hits /adventures
-          expect { click_link "Destroy" }.to change(Adventure, :count).by(-1)
+          expect { click_link "Destroy" }.to change(Adventure, :count).by(0)
         end
       end
     end
