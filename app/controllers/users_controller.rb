@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :signed_in_user, only: [:index, :edit, :update]
+  before_filter :signed_in_user, only: [:index, :show, :edit, :update]
   before_filter :correct_user, only: [:edit, :update]
 
   # GET /users
@@ -47,6 +47,9 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        # Since we require the user to be signed in when viewing his/her and other profiles
+        # we need to sign the user.
+        sign_in(@user) # Found in SessionsHelper
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else
