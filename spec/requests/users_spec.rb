@@ -37,7 +37,6 @@ describe "Users" do
   describe "GET /users/new" do
     context "as a signed in user" do
       it "responds with a 200 status" do
-        cookies['session_token'] = @user.session_token
         get new_user_path
         response.status.should be(200)
       end
@@ -81,7 +80,7 @@ describe "Users" do
       end
     end
   end
-  describe "PUT /users" do
+  describe "PUT /users/:id" do
     context "as a signed in user" do
       it "responds with a 200 status" do
         cookies['session_token'] = @user.session_token

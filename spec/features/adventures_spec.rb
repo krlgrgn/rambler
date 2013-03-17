@@ -106,6 +106,9 @@ describe "Adventures" do
         end
       end
     end
+    context "as a non-signed in user"do
+      pending "wrteia test to redirectto the root url"
+    end
   end
   describe "destroying an adventure" do
     context "as a non-signed in user" do
