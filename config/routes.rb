@@ -5,11 +5,10 @@ Rambler::Application.routes.draw do
   # Static pages.
   match "help" => "static_pages#help"
 
-  # Adventures
-  resources :adventures
-
-  # Users
-  resources :users
+  # Users # Adventures
+  resources :users do
+    resources :adventures
+  end
 
   # Sign up
   match "signup" => "users#new"
