@@ -1,11 +1,15 @@
 class AdventuresController < ApplicationController
   before_filter :signed_in_user, only: [:index, :show, :edit, :new, :update, :destroy, :create]
-  before_filter :correct_user, only: [:edit, :update, :destroy]
+  before_filter :correct_user, only: [:edit, :update, :destroy, :create, :destroy]
 
-  # GET /adventures
-  # GET /adventures.json
+  # GET /users/1/adventures
+  # GET /users/1/adventures.json
   def index
-    @adventures = Adventure.all
+    # Assigning @user as the current user and then looking up the adventures that
+    # the user has will always return the currently signed in users adventures regardless
+    # of the user_id passed in the url/params
+    @user = User.find(params[:user_id])
+    @adventures = @user.adventures.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,10 +17,11 @@ class AdventuresController < ApplicationController
     end
   end
 
-  # GET /adventures/1
-  # GET /adventures/1.json
+  # GET /users/1/adventures/1
+  # GET /users/1/adventures/1.json
   def show
-    @adventure = Adventure.find(params[:id])
+    @user = User.find(params[:user_id])
+    @adventure = @user.adventures.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -28,6 +33,10 @@ class AdventuresController < ApplicationController
   # GET /adventures/new.json
   def new
     @adventure = Adventure.new
+    # If we had used user_id as a parameter here, we could've created an adventure
+    # for the user specified by user_id, rather than the current user.
+    # TODO: I could use user_id here and let the correct_user filter handle it?
+    @user = current_user
 
     respond_to do |format|
       format.html # new.html.erb
@@ -37,17 +46,19 @@ class AdventuresController < ApplicationController
 
   # GET /adventures/1/edit
   def edit
-    @adventure = Adventure.find(params[:id])
+    @user = User.find(params[:user_id])
+    @adventure = @user.adventures.find(params[:id])
   end
 
   # POST /adventures
   # POST /adventures.json
   def create
-    @adventure = Adventure.new(params[:adventure].merge({user_id: params[:user_id]}))
+    @user = User.find(params[:user_id])
+    @adventure = @user.adventures.build(params[:adventure])
 
     respond_to do |format|
       if @adventure.save
-        format.html { redirect_to @adventure, notice: 'Adventure was successfully created.' }
+        format.html { redirect_to user_adventure_path(@user,@adventure), notice: 'Adventure was successfully created.' }
         format.json { render json: @adventure, status: :created, location: @adventure }
       else
         format.html { render action: "new" }
@@ -59,11 +70,12 @@ class AdventuresController < ApplicationController
   # PUT /adventures/1
   # PUT /adventures/1.json
   def update
-    @adventure = Adventure.find(params[:id])
+    @user = User.find(params[:user_id])
+    @adventure = @user.adventures.find(params[:id])
 
     respond_to do |format|
       if @adventure.update_attributes(params[:adventure])
-        format.html { redirect_to @adventure, notice: 'Adventure was successfully updated.' }
+        format.html { redirect_to user_adventure_path(@user, @adventure), notice: 'Adventure was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -75,11 +87,12 @@ class AdventuresController < ApplicationController
   # DELETE /adventures/1
   # DELETE /adventures/1.json
   def destroy
-    @adventure = Adventure.find(params[:id])
+    @user = User.find(params[:user_id])
+    @adventure = @user.adventures.find(params[:id])
     @adventure.destroy
 
     respond_to do |format|
-      format.html { redirect_to adventures_url }
+      format.html { redirect_to user_adventures_path(@user) }
       format.json { head :no_content }
     end
   end
@@ -93,6 +106,7 @@ class AdventuresController < ApplicationController
     end
 
     def correct_user
+      #user_id is the user ID associated with the adventure(s)
       user = User.find(params[:user_id])
       redirect_to root_path if !current_user?(user)
     end
