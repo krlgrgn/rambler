@@ -10,6 +10,6 @@
   %b Departure Time:
   = @adventure.departure_time
 
-= link_to 'Edit', edit_adventure_path(@adventure)
+= link_to 'Edit', edit_user_adventure_path(@user, @adventure)
 \|
-= link_to 'Back', adventures_path
+= link_to 'Back', user_adventures_path(@user)
