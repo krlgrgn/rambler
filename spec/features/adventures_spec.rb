@@ -3,8 +3,11 @@ require 'spec_helper'
 describe "Adventures" do
   describe "listing adventures" do
     context "as a non-signed in user" do
+      before :each do
+        @user = FactoryGirl.create(:user)
+      end
       it "sends the user to the sign in page" do
-        visit adventures_path
+        visit user_adventures_path(@user)
         page.should_not have_content "Listing adventures"
         page.should have_content "Sign in"
       end
@@ -15,7 +18,7 @@ describe "Adventures" do
         sign_in @user
       end
       it "lists the available adventures" do
-        visit adventures_path # hits /adventures
+        visit user_adventures_path(@user) # hits /users/:user_id/adventures
         page.should have_content "Listing adventures"
       end
       context "administrator" do
@@ -25,7 +28,7 @@ describe "Adventures" do
           @adventure = FactoryGirl.create(:adventure)
         end
         it "lists the available adventures" do
-          visit adventures_path # hits /adventures
+          visit user_adventures_path(@user) # hits /users/:user_id/adventures
           page.should have_content "Listing adventures"
         end
       end
@@ -34,7 +37,7 @@ describe "Adventures" do
   describe "editing an adventure" do
     context "as a non-signed in user" do
       it "sends the user to the sign in page" do
-        visit adventures_path
+        visit user_adventures_path(FactoryGirl.create(:user))
         page.should_not have_content "Editing adventure"
         page.should have_content "Sign in"
       end
@@ -47,7 +50,7 @@ describe "Adventures" do
       context "as the correct user" do
         before :each do
           @adventure = FactoryGirl.create(:adventure, user: @user)
-          visit adventures_path # hits /adventures
+          visit user_adventures_path(@user) # Hits /users/:user_id/adventures
         end
         it "it allows the user to edit the adventure" do
           click_link "Edit"
@@ -59,8 +62,9 @@ describe "Adventures" do
       end
       context "as the incorrect user" do
         before :each do
-          @adventure = FactoryGirl.create(:adventure)
-          visit adventures_path # hits /adventures
+          user = FactoryGirl.create(:user)
+          @adventure = FactoryGirl.create(:adventure, user: user)
+          visit user_adventures_path(user) # Hits /users/:user_id/adventures
         end
         it "does not allow the user to edit the adventure" do
           click_link "Edit"
@@ -87,7 +91,7 @@ describe "Adventures" do
         sign_in @user
       end
       it "creates a new adventure and confirms it" do
-        visit adventures_url # hits /adventures
+        visit user_adventures_path(@user) # Hits /users/:user_id/adventures/new
         expect {
           click_link "New Adventure"
           fill_in "From", with: "Dublin"
@@ -121,17 +125,17 @@ describe "Adventures" do
       context "as the correct user" do
         before :each do
           @adventure = FactoryGirl.create(:adventure, user: @user)
-          visit adventures_path # hits /adventures
         end
         it "allows the user to destroy an adventure" do
-          visit adventures_path # hits /adventures
+          visit user_adventures_path(@user) # Hits /users/:user_id/adventures
           expect { click_link "Destroy" }.to change(Adventure, :count).by(-1)
         end
       end
       context "as the incorrect user" do
         before :each do
-          @adventure = FactoryGirl.create(:adventure)
-          visit adventures_path # hits /adventures
+          user = FactoryGirl.create(:user)
+          @adventure = FactoryGirl.create(:adventure, user: user)
+          visit user_adventures_path(user) # Hits /users/:user_id/adventures
         end
         it "does not allow the user to delete another users" do
           expect { click_link "Destroy"}.to change(Adventure, :count).by(0)
@@ -141,11 +145,12 @@ describe "Adventures" do
       context "administrator" do
         before :each do
           @user.toggle!(:admin)
+          other_user = FactoryGirl.create(:user)
+          FactoryGirl.create(:adventure, user: other_user)
           sign_in @user
-          FactoryGirl.create(:adventure)
+          visit user_adventures_path(other_user) # Hits /users/:user_id/adventures
         end
-        it "allows the admin to destroy an adventure" do
-          visit adventures_path # hits /adventures
+        it "does not allow the admin to destroy an adventure" do
           expect { click_link "Destroy" }.to change(Adventure, :count).by(0)
         end
       end

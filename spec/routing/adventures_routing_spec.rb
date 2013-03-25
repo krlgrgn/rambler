@@ -2,33 +2,35 @@ require "spec_helper"
 
 describe AdventuresController do
   describe "routing" do
-
+    before :each do
+      @user = FactoryGirl.create(:user)
+    end
     it "routes to #index" do
-      get("/adventures").should route_to("adventures#index")
+      get("/users/#{@user.id}/adventures").should route_to("adventures#index", :user_id => @user.id.to_s)
     end
 
     it "routes to #new" do
-      get("/adventures/new").should route_to("adventures#new")
+      get("/users/#{@user.id}/adventures/new").should route_to("adventures#new", :user_id => @user.id.to_s)
     end
 
     it "routes to #show" do
-      get("/adventures/1").should route_to("adventures#show", :id => "1")
+      get("/users/#{@user.id}/adventures/1").should route_to("adventures#show", :id => "1", :user_id => @user.id.to_s)
     end
 
     it "routes to #edit" do
-      get("/adventures/1/edit").should route_to("adventures#edit", :id => "1")
+      get("/users/#{@user.id}/adventures/1/edit").should route_to("adventures#edit", :id => "1", :user_id => @user.id.to_s)
     end
 
     it "routes to #create" do
-      post("/adventures").should route_to("adventures#create")
+      post("/users/#{@user.id}/adventures").should route_to("adventures#create", :user_id => @user.id.to_s)
     end
 
     it "routes to #update" do
-      put("/adventures/1").should route_to("adventures#update", :id => "1")
+      put("users/#{@user.id}/adventures/1").should route_to("adventures#update", :id => "1", :user_id => @user.id.to_s)
     end
 
     it "routes to #destroy" do
-      delete("/adventures/1").should route_to("adventures#destroy", :id => "1")
+      delete("/users/#{@user.id}/adventures/1").should route_to("adventures#destroy", :id => "1", :user_id => @user.id.to_s)
     end
 
   end

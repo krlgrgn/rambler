@@ -41,29 +41,53 @@ describe AdventuresController do
   end
 
   describe "GET index" do
+    it "asssigns the user that created the adventures as @user" do
+      creating_user = FactoryGirl.create(:user)
+      adventure = FactoryGirl.create(:adventure, :user_id => creating_user.id)
+      get :index, {:user_id => creating_user.id}
+      assigns(:user).should eq(creating_user)
+    end
     it "assigns all adventures as @adventures" do
       adventure = Adventure.create! valid_attributes
-      get :index, {}
+      get :index, {:user_id => @user.id}
       assigns(:adventures).should eq([adventure])
     end
   end
 
   describe "GET show" do
+    it "assigns the user that created the adventure as @user" do
+      creating_user = FactoryGirl.create(:user)
+      adventure = FactoryGirl.create(:adventure, :user_id => creating_user.id)
+      get :show, { :id => adventure.to_param, :user_id => creating_user.id }
+      assigns(:user).should eq(creating_user)
+    end
     it "assigns the requested adventure as @adventure" do
       adventure = Adventure.create! valid_attributes
-      get :show, {:id => adventure.to_param}, valid_session
+      get :show, { :id => adventure.to_param, :user_id => @user.id }
       assigns(:adventure).should eq(adventure)
     end
   end
 
   describe "GET new" do
+    it "assigns the the currently signed in user as @user" do
+      another_user = FactoryGirl.create(:user)
+      get :new, { :user_id => another_user.id }
+      assigns(:user).should eq(@user)
+    end
     it "assigns a new adventure as @adventure" do
-      get :new, {}, valid_session
+      get :new, {:user_id => @user.id}, valid_session
       assigns(:adventure).should be_a_new(Adventure)
     end
   end
 
   describe "GET edit" do
+    pending "assigns the user that created the adventure as @user"
+    # This is pending because i am thinking of assigning @user in the correct_user filter.
+      #creating_user = FactoryGirl.create(:user)
+      #adventure = FactoryGirl.create(:adventure, :user_id => creating_user.id)
+      #get :edit, { :id => adventure.to_param, :user_id => creating_user.id }
+      #assigns(:user).should eq(creating_user)
+    #end
     it "assigns the requested adventure as @adventure" do
       adventure = Adventure.create! valid_attributes
       get :edit, {:id => adventure.to_param, :user_id => @user.id}, valid_session
@@ -73,36 +97,39 @@ describe AdventuresController do
 
   describe "POST create" do
     describe "with valid params" do
+      it "assigns the user that created the adventure as @user" do
+        creating_user = FactoryGirl.create(:user)
+        adventure = FactoryGirl.create(:adventure, :user_id => creating_user.id)
+        get :show, { :id => adventure.to_param, :user_id => creating_user.id }
+        assigns(:user).should eq(creating_user)
+      end
       it "creates a new Adventure" do
         expect {
           post :create, {:adventure => valid_attributes.except(:user_id), :user_id => @user.id}
         }.to change(Adventure, :count).by(1)
       end
-
       it "assigns a newly created adventure as @adventure" do
         post :create, {:adventure => valid_attributes.except(:user_id), :user_id => @user.id}
         assigns(:adventure).should be_a(Adventure)
         assigns(:adventure).should be_persisted
       end
-
       it "redirects to the created adventure" do
         post :create, {:adventure => valid_attributes.except(:user_id), :user_id => @user.id}
-        response.should redirect_to(Adventure.last)
+        response.should redirect_to(user_adventure_path(@user, Adventure.last))
       end
     end
-
     describe "with invalid params" do
       it "assigns a newly created but unsaved adventure as @adventure" do
         # Trigger the behavior that occurs when invalid params are submitted
         Adventure.any_instance.stub(:save).and_return(false)
-        post :create, {:adventure => { "from" => "invalid value" }}, valid_session
+        post :create, {:adventure => { "from" => "invalid value" }, :user_id => @user.id}, valid_session
         assigns(:adventure).should be_a_new(Adventure)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Adventure.any_instance.stub(:save).and_return(false)
-        post :create, {:adventure => { "from" => "invalid value" }}, valid_session
+        post :create, {:adventure => { "from" => "invalid value" }, :user_id => @user.id}, valid_session
         response.should render_template("new")
       end
     end
@@ -129,7 +156,7 @@ describe AdventuresController do
       it "redirects to the adventure" do
         adventure = Adventure.create! valid_attributes
         put :update, {:id => adventure.to_param, :adventure => valid_attributes, :user_id => @user.id}, valid_session
-        response.should redirect_to(adventure)
+        response.should redirect_to(user_adventure_path(@user, adventure))
       end
     end
 
@@ -163,7 +190,7 @@ describe AdventuresController do
     it "redirects to the adventures list" do
       adventure = Adventure.create! valid_attributes
       delete :destroy, {:id => adventure.to_param, :user_id => @user.id}, valid_session
-      response.should redirect_to(adventures_url)
+      response.should redirect_to(user_adventures_path(@user))
     end
   end
 

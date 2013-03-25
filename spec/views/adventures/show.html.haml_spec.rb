@@ -2,10 +2,12 @@ require 'spec_helper'
 
 describe "adventures/show" do
   before(:each) do
+    @user = assign(:user, stub_model(User, :id => 1))
     @adventure = assign(:adventure, stub_model(Adventure,
       :from => "From",
       :to => "To",
-      :departure_time => "Departure Time"
+      :departure_time => "Departure Time",
+      :user => @user
     ))
   end
 

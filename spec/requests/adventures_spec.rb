@@ -2,20 +2,20 @@ require 'spec_helper'
 
 describe "Adventures" do
   before :each do
-    @adventure = FactoryGirl.create(:adventure)
     @user = FactoryGirl.create(:user)
+    @adventure = FactoryGirl.create(:adventure, :user => @user)
   end
   describe "GET /adventures" do
     context "as a signed in user" do
       it "responds with a 200 status" do
         cookies['session_token'] = @user.session_token
-        get adventures_path
+        get user_adventures_path(@user)
         response.status.should be(200)
       end
     end
     context "as a non-signed in user" do
       it "responds with a 302 status" do
-        get adventures_path
+        get user_adventures_path(@user)
         response.status.should be(302)
       end
     end
@@ -24,13 +24,13 @@ describe "Adventures" do
     context "as a signed in user" do
       it "responds with a 200 status" do
         cookies['session_token'] = @user.session_token
-        get adventure_path(@adventure)
+        get user_adventure_path(@user, @adventure)
         response.status.should be(200)
       end
     end
     context "as a non-signed in user" do
       it "responds with a 302 status" do
-        get adventure_path(@adventure)
+        get user_adventure_path(@user, @adventure)
         response.status.should be(302)
       end
     end
@@ -39,13 +39,13 @@ describe "Adventures" do
     context "as a signed in user" do
       it "responds with a 200 status" do
         cookies['session_token'] = @user.session_token
-        get new_adventure_path
+        get new_user_adventure_path(@user)
         response.status.should be(200)
       end
     end
     context "as a non-signed in user" do
       it "responds with a 302 status" do
-        get new_adventure_path
+        get new_user_adventure_path(@user)
         response.status.should be(302)
       end
     end
@@ -54,13 +54,13 @@ describe "Adventures" do
     context "as a signed in user" do
       it "responds with a 200 status" do
         cookies['session_token'] = @user.session_token
-        get edit_adventure_path(:id => @adventure.id, :user_id => @user.id)
+        get edit_user_adventure_path(@user, @adventure)
         response.status.should be(200)
       end
     end
     context "as a non-signed in user" do
       it "responds with a 302 status" do
-        get edit_adventure_path(@adventure)
+        get edit_user_adventure_path(@user, @adventure)
         response.status.should be(302)
       end
     end
@@ -71,13 +71,13 @@ describe "Adventures" do
     end
     context "as a signed in user" do
       it "responds with a 200 status" do
-        post adventures_path, { :adventure => @new_adventure, :user_id => @user.id }, {}
+        post user_adventures_path(@user), { :adventure => @new_adventure, :user_id => @user.id }, {}
         response.status.should be(302)
       end
     end
     context "as a non-signed in user" do
       it "responds with a 302 status" do
-        post adventures_path, { :adventure => @new_adventure, :user_id => @user.id}, {}
+        post user_adventures_path(@user), { :adventure => @new_adventure, :user_id => @user.id}, {}
         response.status.should be(302)
       end
     end
@@ -87,13 +87,13 @@ describe "Adventures" do
       it "responds with a 200 status" do
         cookies['session_token'] = @user.session_token
         Adventure.any_instance.should_receive(:update_attributes).with({ "state" => "a state" })
-        put adventure_path(@adventure), {:id => @adventure.to_param, :adventure => { "state" => "a state" }, :user_id => @user.id}
+        put user_adventure_path(@user, @adventure), {:id => @adventure.to_param, :adventure => { "state" => "a state" }, :user_id => @user.id}
         response.status.should be(200)
       end
     end
     context "as a non-signed in user" do
       it "responds with a 302 status" do
-        put adventure_path(@adventure), {:id => @adventure.to_param, :user => { "state" => "a state" }, :user_id => @user.id}
+        put user_adventure_path(@user, @adventure), {:id => @adventure.to_param, :user => { "state" => "a state" }, :user_id => @user.id}
         response.status.should be(302)
       end
     end
