@@ -84,6 +84,15 @@ describe "Adventures" do
   end
   describe "creating a new adventure" do
     context "as a non-signed in user" do
+      before :each do
+        @user = FactoryGirl.create(:user)
+      end
+       it "sends the user to the sign in page" do
+        visit user_adventures_path(@user)
+        page.should_not have_content "New adventure"
+        page.should have_content "Sign in"
+      end
+
     end
     context "as a signed in user" do
       before :each do
@@ -110,12 +119,19 @@ describe "Adventures" do
         end
       end
     end
-    context "as a non-signed in user"do
-      pending "wrteia test to redirectto the root url"
-    end
   end
   describe "destroying an adventure" do
     context "as a non-signed in user" do
+      before :each do
+        @user = FactoryGirl.create(:user)
+      end
+       it "sends the user to the sign in page" do
+        adventure = FactoryGirl.create(:adventure, user: @user)
+        visit user_adventures_path(@user)
+        page.should_not have_content "Destroy"
+        page.should have_content "Sign in"
+      end
+
     end
     context "as a signed in user" do
       before :each do
