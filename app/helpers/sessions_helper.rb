@@ -27,15 +27,15 @@ module SessionsHelper
   #
   # current_user accessor method
   # It returns the current user if the user is present otherwise it
-  # retrieves the user by there session token.
+  # retrieves the user by their session token.
   #
   def current_user
     @current_user ||= User.find_by_session_token(cookies[:session_token])
   end
 
   #
-  # Returns trur of false depending on whether the user passed to the
-  # method is the currently lsigned in user.
+  # Returns true if false depending on whether the user passed
+  # as a parameter is the current user.
   #
   def current_user?(user)
     user == current_user
