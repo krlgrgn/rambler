@@ -18,6 +18,7 @@ Rambler::Application.routes.draw do
   match "signin" => "sessions#new"
   match "signout" => "sessions#destroy", via: :delete
 
+  resources :password_resets
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
