@@ -95,4 +95,30 @@ describe User do
       @user.session_token.should_not be_blank
     end
   end
+
+  describe "reseting a user's password" do
+    before :each do
+      @user = FactoryGirl.create(:user)
+    end
+    it "responds to send_password_reset_email" do
+      @user.should respond_to(:send_password_reset_email)
+    end
+    it "responds to find_by_password_reset_token" do
+      User.should respond_to(:find_by_password_reset_token)
+    end
+    describe "finding a user by it's password reset token" do
+      it "returns the user for a valid token" do
+        token = ActiveSupport::MessageVerifier.new(
+          Rails.configuration.secret_token).generate(
+            [@user.id,1.day.from_now,@user.password_digest])
+        User.find_by_password_reset_token(token).should eq(@user)
+      end
+      it "returns nil for an invalid token" do
+        token = ActiveSupport::MessageVerifier.new(
+          Rails.configuration.secret_token).generate(
+            [@user.id,1.day.ago,@user.password_digest])
+        User.find_by_password_reset_token(token).should eq(nil)
+      end
+    end
+  end
 end
