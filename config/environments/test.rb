@@ -34,4 +34,7 @@ Rambler::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # Action mailer configuration
+  config.action_mailer.default_url_options = { host: "localhost:8080" }
 end
