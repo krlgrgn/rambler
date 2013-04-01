@@ -15,9 +15,14 @@ class PasswordResetsController < ApplicationController
   # POST /password_resets
   # POST /password_resets.json
   def create
-    user = User.find_by_email(params[:password_reset][:email])
-    user.send_password_reset_email if user
-    redirect_to root_path
+    @user = User.find_by_email(params[:password_reset][:email])
+    respond_to do |format|
+      if @user
+        @user.send_password_reset_email
+        format.html { redirect_to root_path }
+        format.json { head :no_content }
+      end
+    end
   end
 
   # PUT /password_reset/as393JDKDSK3
