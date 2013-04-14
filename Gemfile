@@ -49,3 +49,5 @@ gem 'pg'
 gem 'haml-rails'
 
 gem 'bcrypt-ruby'
+
+gem 'omniauth-facebook'
