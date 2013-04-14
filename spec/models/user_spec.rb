@@ -74,25 +74,55 @@ describe User do
 
   # User authentication
   describe "authenticating a user" do
-    before :each do
-      @user = FactoryGirl.create(:user)
-      @found_user = User.find_by_email(@user.email)
-    end
+    context "using our signup" do
+      before :each do
+        @user = FactoryGirl.create(:user)
+        @found_user = User.find_by_email(@user.email)
+      end
+      it "should authenticate a valid user" do
+        @found_user.authenticate("password").should eq(@user)
+      end
 
-    it "should authenticate a valid user" do
-      @found_user.authenticate("password").should eq(@user)
-    end
+      it "should not authenticate an invalid user" do
+        @found_user.authenticate("invalid").should_not eq(@user)
+      end
 
-    it "should not authenticate an invalid user" do
-      @found_user.authenticate("invalid").should_not eq(@user)
-    end
+      it "is invalid if the password length is less than 8 characters" do
+        FactoryGirl.build(:user, password: "123", password_confirmation: "123").should_not be_valid
+      end
 
-    it "is invalid if the password length is less than 8 characters" do
-      FactoryGirl.build(:user, password: "123", password_confirmation: "123").should_not be_valid
+      it "creates a session token when saving a user" do
+        @user.session_token.should_not be_blank
+      end
     end
-
-    it "creates a session token when saving a user" do
-      @user.session_token.should_not be_blank
+    context "using facebook sigin" do
+      before :each do
+        @user = FactoryGirl.build(:user,
+                                  uid: 1337,
+                                  provider: "facebook",
+                                  session_token: "This is a token.")
+      end
+      it "should authenticate a valid facebook user" do
+        # Create mock omniatuh object.
+        OmniAuth.config.test_mode = true
+        auth = OmniAuth::AuthHash.new({
+          "uid" => "1337",
+          "provider" => "facebook",
+          "info" => {
+            "first_name" => @user.first_name,
+            "last_name"  => @user.last_name,
+            "image"      => @user.image,
+            "email" => @user.email
+          },
+          "credentials" => {
+            "token" => "This is a token."
+          }
+        })
+        User.from_omniauth(auth)
+        user = User.where(uid: "1337", provider: "facebook").first
+        user.should_not eq(nil)
+        user.session_token.should_not eq(nil)
+      end
     end
   end
 
