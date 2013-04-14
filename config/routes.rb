@@ -17,8 +17,16 @@ Rambler::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   match "signin" => "sessions#new"
   match "signout" => "sessions#destroy", via: :delete
+  # Facebook authentication
+  match "auth/:provider/callback" => "sessions#fb_create"
+  match "auth/failure" => "static_pages#home"
 
+  # Password reset routes.
   resources :password_resets
+
+  ################
+  #=======================================================
+  ################
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
