@@ -15,6 +15,17 @@ class SessionsController < ApplicationController
     end
   end
 
+  def fb_create
+    user = User.from_omniauth(env["omniauth.auth"])
+    if user
+      # Sign in the user.
+      sign_in user
+      redirect_back_or user
+    else
+      render 'new'
+    end
+  end
+
   # DELETE /sessions
   def destroy
     sign_out
