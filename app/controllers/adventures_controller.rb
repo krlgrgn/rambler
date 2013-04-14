@@ -1,5 +1,5 @@
 class AdventuresController < ApplicationController
-  before_filter :signed_in_user, only: [:index, :show, :edit, :new, :update, :destroy, :create]
+  before_filter :signed_in_user
   before_filter :correct_user, only: [:edit, :update, :destroy, :create, :destroy]
 
   # GET /users/1/adventures
