@@ -25,9 +25,11 @@ ActiveRecord::Schema.define(:version => 20130209163523) do
   add_index "adventures", ["user_id"], :name => "index_adventures_on_user_id"
 
   create_table "users", :force => true do |t|
+    t.string   "email"
+    t.string   "uid"
+    t.string   "provider"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "email"
     t.string   "city"
     t.string   "state"
     t.string   "country"
@@ -35,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20130209163523) do
     t.string   "password_digest"
     t.string   "session_token"
     t.boolean  "admin"
+    t.string   "image"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end

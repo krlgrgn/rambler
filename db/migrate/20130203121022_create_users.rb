@@ -1,9 +1,11 @@
 class CreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
+      t.string :email
+      t.string :uid
+      t.string :provider
       t.string :first_name
       t.string :last_name
-      t.string :email
       t.string :city
       t.string :state
       t.string :country
@@ -11,6 +13,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :password_digest
       t.string :session_token
       t.boolean :admin
+      t.string :image
 
       t.timestamps
     end
