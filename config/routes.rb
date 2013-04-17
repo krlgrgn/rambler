@@ -18,7 +18,9 @@ Rambler::Application.routes.draw do
   match "signin" => "sessions#new"
   match "signout" => "sessions#destroy", via: :delete
   # Facebook authentication
-  match "auth/:provider/callback" => "sessions#fb_create"
+  match "auth/:provider/callback" => "sessions#fb_create",
+        via: :get,
+        as: :fb_create
   match "auth/failure" => "static_pages#home"
 
   # Password reset routes.
