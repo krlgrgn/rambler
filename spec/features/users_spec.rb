@@ -3,36 +3,47 @@ require 'spec_helper'
 describe "Users" do
 
   describe "signup" do
-    before :each do
-      visit signup_path # Hits /users/new
-    end
+    context "as a normal user" do
+      before :each do
+        visit signup_path # Hits /users/new
+      end
+      it "creates a new user and confirms it" do
+        expect {
+          fill_in "First name", with: "Karl"
+          fill_in "Last name", with: "Grogan"
+          fill_in "Email", with: "blah@blah.com"
+          fill_in "City", with: "Dublin"
+          fill_in "State", with: "Dublin"
+          fill_in "About", with: "Stuff."
+          fill_in "Country", with: "Ireland"
+          fill_in "Password", with: "123456789"
+          fill_in "Confirmation", with: "123456789"
+          click_button "Save"
+        }.to change(User, :count).by(1)
+        page.should have_content "User was successfully created."
+      end
 
-    it "creates a new user and confirms it" do
-      expect {
-        fill_in "First name", with: "Karl"
-        fill_in "Last name", with: "Grogan"
-        fill_in "Email", with: "blah@blah.com"
-        fill_in "City", with: "Dublin"
-        fill_in "State", with: "Dublin"
-        fill_in "About", with: "Stuff."
-        fill_in "Country", with: "Ireland"
-        fill_in "Password", with: "123456789"
-        fill_in "Confirmation", with: "123456789"
-        click_button "Save"
-      }.to change(User, :count).by(1)
-      page.should have_content "User was successfully created."
+      it "wont create a new user if form is submitted with no info" do
+        expect {
+          click_button "Save"
+        }.not_to change(User, :count)
+      end
     end
-
-    it "wont create a new user if form is submitted with no info" do
-      expect {
-        click_button "Save"
-      }.not_to change(User, :count)
+    context "as a facebook user" do
+      it "creates a new user" do
+        pending "create featre test for FB sign in!"
+      end
     end
   end
 
   describe "Authentication" do
     before :each do
-      @user = FactoryGirl.create(:user, email: "sample@sample.com", password: "12345678", password_confirmation: "12345678")
+      @user = FactoryGirl.create(
+        :user,
+        email: "sample@sample.com",
+        password: "12345678",
+        password_confirmation: "12345678"
+      )
       visit root_path
     end
 
