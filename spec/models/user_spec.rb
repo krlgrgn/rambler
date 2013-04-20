@@ -101,11 +101,9 @@ describe User do
                                   uid: 1337,
                                   provider: "facebook",
                                   session_token: "This is a token.")
-      end
-      it "should authenticate a valid facebook user" do
-        # Create mock omniatuh object.
         OmniAuth.config.test_mode = true
-        auth = OmniAuth::AuthHash.new({
+        # Create mock omniatuh object.
+        @auth = OmniAuth::AuthHash.new({
           "uid" => "1337",
           "provider" => "facebook",
           "info" => {
@@ -118,10 +116,16 @@ describe User do
             "token" => "This is a token."
           }
         })
-        User.from_omniauth(auth)
+      end
+      it "creates a valid facebook user" do
+        User.from_omniauth(@auth)
         user = User.where(uid: "1337", provider: "facebook").first
         user.should_not eq(nil)
         user.session_token.should_not eq(nil)
+      end
+      it "returns a FB user specified by the omniatuh response from FB" do
+        user = FactoryGirl.create(:user, provider: "facebook", uid: 1337)
+        User.from_omniauth(@auth). should eq(user)
       end
     end
   end
