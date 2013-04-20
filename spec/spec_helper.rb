@@ -37,6 +37,8 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
+  OmniAuth.config.test_mode = true
+
 
   def sign_in user
     visit signin_path
