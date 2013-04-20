@@ -17,5 +17,9 @@ describe SessionsController do
     it "routes to #destroy" do
       delete("/signout").should route_to("sessions#destroy")
     end
+
+    it "routes to #fb_create" do
+      get("/auth/facebook/callback").should route_to("sessions#fb_create", :provider => "facebook")
+    end
   end
 end
