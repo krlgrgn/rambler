@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  before_filter :redirect_to_root
   # GET /sessions
   def new
   end

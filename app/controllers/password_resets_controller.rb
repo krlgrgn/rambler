@@ -1,4 +1,5 @@
 class PasswordResetsController < ApplicationController
+  before_filter :redirect_to_root
   # GET /password_resets/new
   # GET /password_resets/new.json
   def new

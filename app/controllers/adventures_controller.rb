@@ -1,4 +1,5 @@
 class AdventuresController < ApplicationController
+  before_filter :redirect_to_root
   before_filter :signed_in_user
   before_filter :correct_user, only: [:edit, :update, :destroy, :create, :destroy]
 
