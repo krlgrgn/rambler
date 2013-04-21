@@ -20,7 +20,7 @@ class LandingPagesController < ApplicationController
         format.html { redirect_to root_path, notice: 'Thank you for expressing your interest.' }
         format.json { render json: root_path, status: :created, location: root_path }
       else
-        format.html { render "new" }
+        format.html { redirect_to root_path }
         format.json { render json: root_path, status: :unprocessable_entity }
       end
     end
