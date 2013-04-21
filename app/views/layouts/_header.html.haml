@@ -1,14 +1,19 @@
-%header{ :class =>"navbar navbar-fixed-top navbar-inverse"}
+.navbar.navbar-fluid-top
   .navbar-inner
-    .container
-      %nav
-        %ul{ :class => "nav pull-right" }
+    .container-fluid
+      %a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.brand(href="#") Rambler
+      .container.nav-collapse
+        %ul.nav.pull-right
           %li
-            = link_to "Home",    '#'
+            = link_to "Home", '#'
           %li
-            = link_to "Help",    '#'
+            = link_to "Help", '#'
           - if signed_in?
-            %li
+            %l
               = link_to "Sign out", signout_path, method: "delete"
           - else
             %li
