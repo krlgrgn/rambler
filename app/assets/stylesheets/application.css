@@ -10,4 +10,8 @@
  *
  *= require_self
  *= require_tree .
+ *
+ * Flat UI relies on Twitter Bootstap and thus needs to be loaded after it
+ * because it uses the class names n stuff which needs to overide.
+ *= require flat-ui
  */
