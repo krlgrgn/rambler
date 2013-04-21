@@ -1,6 +1,8 @@
 Rambler::Application.routes.draw do
+  resources :landing_pages
+
   # This hits /
-  root to: "static_pages#home"
+  root to: "landing_pages#new"
 
   # Static pages.
   match "help" => "static_pages#help"
@@ -17,6 +19,7 @@ Rambler::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   match "signin" => "sessions#new"
   match "signout" => "sessions#destroy", via: :delete
+
   # Facebook authentication
   match "auth/:provider/callback" => "sessions#fb_create",
         via: :get,
