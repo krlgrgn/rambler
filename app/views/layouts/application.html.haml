@@ -18,16 +18,16 @@
 
   %body
     -#
-      This is to be un commented when launch
+      This is to be un-commented when launch
       = render "layouts/header"
-    .container-fluid
+    .container
       -#
         Yield the body
         The yield template should have its own row classes defined in it.
       = bootstrap_flash
       = yield
-
-    %footer
+    -#
+      %footer
       %p &copy; Company 2013
   /
     Javascripts
