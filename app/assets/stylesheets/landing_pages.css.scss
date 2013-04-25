@@ -1,14 +1,9 @@
 // Place all the styles related to the LandingPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
 body {
   background: url("highway.jpg") no-repeat center center fixed;
   background-size: cover;
-}
-
-.container {
-  width: 1600px;
 }
 
 #landing-page-container {
@@ -16,17 +11,30 @@ body {
 }
 
 #landing-page-headline {
-  font-size: 40px;
+  font-size: 38px;
+}
+
+#landing-page-subheadline {
+  text-shadow: black 0.1em 0.1em 0.2em;
+  color: #e67e22;
 }
 
 #landing-page-description {
-  font-size: 25px;
-  font-size: 20px;
+  font-size: 33px;
   color: white;
   text-shadow: black 0.1em 0.1em 0.2em;
-//  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 #landing-page-email-field {
   width: 60%;
+}
+
+// These only apply when the screen width is greater than 1200px.
+@media (min-width: 1200px) {
+  .container {
+    width: 1600px;
+  }
+  #landing-page-slider {
+    width: 600px;
+  }
 }
