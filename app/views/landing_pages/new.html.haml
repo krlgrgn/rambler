@@ -1,24 +1,24 @@
-.row#landing-page-container
-  .span24
-    .span9
-      .row
-        .span9
+.row-fluid#landing-page-container
+  .span12
+    .span6
+      .row-fluid
+        .span12
           %h1#landing-page-headline
             Create amazing adventures and meet new people!
-      .row
-        .span8
+      .row-fluid
+        .span12
           %p.lead#landing-page-description
-            Enjoy your journies by finding kindred spirits to travel with
-            whether it's for safety, to kill the boredom, or make new friends.
-      .row
-        .span8
+            Enjoy your journeys by finding kindred spirits to travel with
+            whether it's for safety, to numb the boredom, or make new friends.
+      .row-fluid
+        .span12
           %h2.lead#landing-page-subheadline
             We'll be launching soon. Do you want to be part of this adventure?
-      .row
-        .span6
+      .row-fluid
+        .span12
           = render 'form'
 
-    .span7
+    .span6
       .carousel.slide#landing-page-slider
         %ol.carousel-indicators
           %li.active{"data-target"=> "landing-page-slider", "data-slide-to"=> "0", "class"=> "active" }
