@@ -30,9 +30,9 @@ body {
 }
 
 // These only apply when the screen width is greater than 1200px.
-@media (min-width: 1200px) {
+@media (min-width: 1300px) {
   .container {
-    width: 1600px;
+    width: 80%;
   }
   #landing-page-slider {
     width: 600px;
