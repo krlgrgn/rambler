@@ -1,25 +1,24 @@
 .row#landing-page-container
-  .span24#details
+  .span24
     .span9
-      %h1#landing-page-headline
-        Create amazing adventures and meet new people!
       .row
         .span9
+          %h1#landing-page-headline
+            Create amazing adventures and meet new people!
       .row
         .span8
           %p.lead#landing-page-description
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo consequat.
+            Enjoy your journies by finding kindred spirits to travel with
+            whether it's for safety, to kill the boredom, or make new friends.
       .row
-        .span10
+        .span8
+          %h2.lead#landing-page-subheadline
+            We'll be launching soon. Do you want to be part of this adventure?
       .row
         .span6
           = render 'form'
-    .span2
-    .span7#featured
-      %h1 Placeholder for slideshow
+
+    .span7
       .carousel.slide#landing-page-slider
         %ol.carousel-indicators
           %li.active{"data-target"=> "landing-page-slider", "data-slide-to"=> "0", "class"=> "active" }
@@ -33,7 +32,7 @@
           .item
             = image_tag "images3.jpg"
         %a.carousel-control.left{"href"=> "landing-page-slider", "data-slide"=> "prev"}
-          &lsaquo;
+          ‹
         %a.carousel-control.right{"href"=> "landing-page-slider", "data-slide"=> "next"}
-          &rsaquo;
+          ›
 
