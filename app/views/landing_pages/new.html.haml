@@ -1,6 +1,6 @@
 .row-fluid#landing-page-container
   .span12
-    .span6
+    .span6#landing-page-details
       .row-fluid
         .span12
           %h1#landing-page-headline
@@ -8,8 +8,9 @@
       .row-fluid
         .span12
           %p.lead#landing-page-description
-            Enjoy your journeys by finding kindred spirits to travel with
-            whether it's for safety, to numb the boredom, or make new friends.
+            Share your journeys by finding kindred spirits to travel with,
+            whether it's for safety, to numb the boredom, or make new friends,
+            and be a part of a great community.
       .row-fluid
         .span12
           %h2.lead#landing-page-subheadline
@@ -17,7 +18,6 @@
       .row-fluid
         .span12
           = render 'form'
-
     .span6
       .carousel.slide#landing-page-slider
         %ol.carousel-indicators
