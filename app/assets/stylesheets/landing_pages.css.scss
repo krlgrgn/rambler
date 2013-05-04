@@ -6,12 +6,11 @@ body {
   background-size: cover;
 }
 
-#landing-page-container {
-  margin-top: 300px;
+#landing-page-details {
 }
 
 #landing-page-headline {
-  font-size: 38px;
+  font-size: 28px;
 }
 
 #landing-page-subheadline {
@@ -20,21 +19,39 @@ body {
 }
 
 #landing-page-description {
-  font-size: 33px;
+  font-family: "Proxima N W02 Reg",Helvetica,Arial,sans-serif;
+  font-size: 1.5em;
   color: white;
+  line-height: 30px;
   text-shadow: black 0.1em 0.1em 0.2em;
 }
 
 #landing-page-email-field {
-  width: 60%;
+  width: 50%;
 }
 
-// These only apply when the screen width is greater than 1200px.
+// These only apply when the screen width is greater than 1300px.
 @media (min-width: 1300px) {
   .container {
     width: 80%;
   }
   #landing-page-slider {
     width: 600px;
+  }
+}
+
+// These only apply when the screen width is greater than 800px.
+@media (min-width: 800px) {
+  #landing-page-headline {
+    font-size: 38px;
+  }
+  #landing-page-description {
+    font-size: 2em;
+  }
+  #landing-page-email-field {
+    width: 60%;
+  }
+  #landing-page-container {
+    margin-top: 15%;
   }
 }
