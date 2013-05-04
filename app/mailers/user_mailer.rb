@@ -12,4 +12,10 @@ class UserMailer < ActionMailer::Base
 
     mail to: @user.email, subject: "Password Reset"
   end
+
+  def register_interest(landing_page)
+    @landing_page = landing_page
+
+    mail to: @landing_page.email, subject: "Thank you for your interest!"
+  end
 end

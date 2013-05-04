@@ -12,4 +12,8 @@ class LandingPage < ActiveRecord::Base
                             message: "Invalid email address."
                          }
 
+  # Methods
+  def send_register_interest_email
+    UserMailer.register_interest(self).deliver
+  end
 end

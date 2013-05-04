@@ -17,6 +17,7 @@ class LandingPagesController < ApplicationController
 
     respond_to do |format|
       if @landing_page.save
+        @landing_page.send_register_interest_email
         format.html { redirect_to root_path, notice: 'Thank you for expressing your interest.' }
         format.json { render json: root_path, status: :created, location: root_path }
       else
