@@ -1,13 +1,13 @@
 class AdventuresController < ApplicationController
   before_filter :signed_in_user
-  before_filter :correct_user, only: [:edit, :update, :destroy, :create, :destroy]
+  before_filter :correct_user, only: [:edit, :update, :destroy, :create]
 
   # GET /users/1/adventures
   # GET /users/1/adventures.json
   def index
-    # Assigning @user as the current user and then looking up the adventures that
-    # the user has will always return the currently signed in users adventures regardless
-    # of the user_id passed in the url/params
+    # Assigning @user as the current user and then looking up the adventures
+    # that the user has will always return the currently signed in users
+    # adventures regardless of the user_id passed in the url/params.
     @user = User.find(params[:user_id])
     @adventures = @user.adventures.all
 

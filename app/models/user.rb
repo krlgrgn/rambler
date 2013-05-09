@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
 
   # Relations
   has_many :adventures
+  has_one  :message_box
 
   # Methods
   has_secure_password
