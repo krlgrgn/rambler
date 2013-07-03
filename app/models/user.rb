@@ -23,10 +23,11 @@ class User < ActiveRecord::Base
   # Filters
   before_save { |user| user.email = email.downcase }
   before_save :create_session_token
+  after_create :create_mailbox
 
   # Relations
   has_many :adventures
-  has_one  :message_box
+  has_one  :mailbox
 
   # Methods
   has_secure_password
@@ -84,5 +85,9 @@ class User < ActiveRecord::Base
   private
     def create_session_token
       self.session_token = SecureRandom.urlsafe_base64
+    end
+
+    def create_mailbox
+      Mailbox.create!(user: self)
     end
 end

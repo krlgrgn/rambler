@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe MessageBoxesController do
+describe MailboxesController do
   describe "routing" do
     before :each do
       @user = FactoryGirl.create(:user)
@@ -15,7 +15,7 @@ describe MessageBoxesController do
     #end
 
     it "routes to #show" do
-      get("/users/#{@user.id}/message_box").should route_to("message_boxes#show", :user_id => @user.id.to_s)
+      get("/users/#{@user.id}/mailbox").should route_to("mailboxes#show", :user_id => @user.id.to_s)
     end
 
     #it "routes to #edit" do

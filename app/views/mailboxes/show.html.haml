@@ -1,0 +1,13 @@
+%p#notice= notice
+
+%p
+  %b User:
+  - @mailbox.conversations.each do |conversation|
+    %h3 Conversation
+    = conversation.id
+    - conversation.messages.each do |message|
+      = message.user_id
+      = message.body
+
+
+= link_to 'Back', user_path(current_user)

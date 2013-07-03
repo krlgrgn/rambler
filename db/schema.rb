@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130506084854) do
+ActiveRecord::Schema.define(:version => 20130509201955) do
 
   create_table "adventures", :force => true do |t|
     t.string   "from"
@@ -24,10 +24,44 @@ ActiveRecord::Schema.define(:version => 20130506084854) do
 
   add_index "adventures", ["user_id"], :name => "index_adventures_on_user_id"
 
-  create_table "message_boxes", :force => true do |t|
+  create_table "conversation_mailbox_maps", :force => true do |t|
+    t.integer  "conversation_id"
+    t.integer  "mailbox_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "conversation_message_maps", :force => true do |t|
+    t.integer  "conversation_id"
+    t.integer  "message_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "conversation_user_maps", :force => true do |t|
+    t.integer  "conversation_id"
+    t.integer  "user_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "conversations", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "mailboxes", :force => true do |t|
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "messages", :force => true do |t|
+    t.text     "body"
+    t.integer  "user_id"
+    t.integer  "conversation_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "users", :force => true do |t|

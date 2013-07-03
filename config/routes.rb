@@ -1,6 +1,12 @@
 Rambler::Application.routes.draw do
 
 
+  resources :messages
+
+
+  resources :conversations
+
+
   # This hits /
   root to: "static_pages#home"
 
@@ -10,7 +16,7 @@ Rambler::Application.routes.draw do
   # Users # Adventures
   resources :users do
     resources :adventures
-    resource :message_box
+    resource :mailbox, only: :show
   end
 
   # Sign up
