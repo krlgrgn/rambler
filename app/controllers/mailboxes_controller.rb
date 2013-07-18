@@ -5,7 +5,7 @@ class MailboxesController < ApplicationController
   # GET /users/1/mailbox
   # GET /users/1/mailbox.json
   def show
-    @mailbox= @user.mailbox
+    @mailbox = @user.mailbox
 
     respond_to do |format|
       format.html # show.html.erb
