@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Rambler::Application.load_tasks
+Quest::Application.load_tasks

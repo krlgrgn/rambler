@@ -1,4 +1,4 @@
-Rambler::Application.routes.draw do
+Quest::Application.routes.draw do
 
 
   resources :messages
