@@ -12,3 +12,8 @@
  *= require_tree .
  *= require flat-ui
  */
+
+#content {
+  background-color: #F3F3F3;
+  border: 1px solid #ddd;
+}
