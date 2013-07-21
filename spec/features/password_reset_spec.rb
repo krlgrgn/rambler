@@ -18,7 +18,7 @@ describe "Password Reset" do
     it "redirects to the root page when a user fills out the email form" do
       fill_in "Email", with: @user.email
       click_button "Reset Password"
-      page.should have_content "StaticPages#home"
+      page.should have_content "Home Help Sign up Sign in Sigin in with Facebook Create amazing adventures and meet new people!"
     end
   end
   describe "visiting the password reset page" do
@@ -36,7 +36,7 @@ describe "Password Reset" do
       fill_in "Confirmation", with: "12345678"
 
       click_button "Save"
-      page.should have_content "StaticPages#home"
+      page.should have_content "Home Help Sign up Sign in Sigin in with Facebook Create amazing adventures and meet new people!"
     end
   end
 end

@@ -18,14 +18,14 @@ describe "Users" do
           fill_in "Country", with: "Ireland"
           fill_in "Password", with: "123456789"
           fill_in "Confirmation", with: "123456789"
-          click_button "Save"
+          click_button "Sign up"
         }.to change(User, :count).by(1)
         page.should have_content "User was successfully created."
       end
 
       it "wont create a new user if form is submitted with no info" do
         expect {
-          click_button "Save"
+          click_button "Sign up"
         }.not_to change(User, :count)
       end
     end
@@ -152,7 +152,7 @@ describe "Users" do
           click_link "Edit"
 
           # Verify
-          page.should have_content("StaticPages#home")
+          page.should have_content("Home Help Sign out Messages Create amazing adventures and meet new people!")
         end
       end
 
