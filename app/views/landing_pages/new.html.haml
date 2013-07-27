@@ -9,8 +9,8 @@
         .span12
           %p.lead#landing-page-description
             Share your journeys by finding kindred spirits to travel with,
-            whether it's for safety, to numb the boredom, or make new friends,
-            and be a part of a great community.
+            whether it's for safety, to numb the boredom, or make new friends.
+            Join us and become part of a great community.
       .row-fluid
         .span12
           %h2.lead#landing-page-subheadline
@@ -20,10 +20,6 @@
           = render 'form'
     .span6
       .carousel.slide#landing-page-slider
-        %ol.carousel-indicators
-          %li.active{"data-target"=> "landing-page-slider", "data-slide-to"=> "0", "class"=> "active" }
-          %li.active{"data-target"=> "landing-page-slider", "data-slide-to"=> "1", "class"=> "active" }
-          %li.active{"data-target"=> "landing-page-slider", "data-slide-to"=> "2", "class"=> "active" }
         .carousel-inner
           .active.item
             = image_tag "images1.jpg"
@@ -31,8 +27,3 @@
             = image_tag "images2.jpg"
           .item
             = image_tag "images3.jpg"
-        %a.carousel-control.left{"href"=> "landing-page-slider", "data-slide"=> "prev"}
-          ‹
-        %a.carousel-control.right{"href"=> "landing-page-slider", "data-slide"=> "next"}
-          ›
-
