@@ -8,7 +8,7 @@ describe "adventures/edit" do
       :to => "MyString",
       :departure_time => "MyString"
     ))
-    view.stub!(:current_user).and_return(@user)
+    view.stub(:current_user).and_return(@user)
   end
 
   it "renders the edit adventure form" do

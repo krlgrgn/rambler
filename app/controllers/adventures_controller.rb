@@ -9,7 +9,7 @@ class AdventuresController < ApplicationController
     # that the user has will always return the currently signed in users
     # adventures regardless of the user_id passed in the url/params.
     @user = User.find(params[:user_id])
-    @adventures = @user.adventures.all
+    @adventures = @user.adventures
 
     respond_to do |format|
       format.html # index.html.erb
@@ -54,7 +54,7 @@ class AdventuresController < ApplicationController
   # POST /adventures.json
   def create
     @user = User.find(params[:user_id])
-    @adventure = @user.adventures.build(params[:adventure])
+    @adventure = @user.adventures.build(adventure_params)
 
     respond_to do |format|
       if @adventure.save
@@ -74,7 +74,7 @@ class AdventuresController < ApplicationController
     @adventure = @user.adventures.find(params[:id])
 
     respond_to do |format|
-      if @adventure.update_attributes(params[:adventure])
+      if @adventure.update_attributes(adventure_params)
         format.html { redirect_to user_adventure_path(@user, @adventure), notice: 'Adventure was successfully updated.' }
         format.json { head :no_content }
       else
@@ -109,5 +109,9 @@ class AdventuresController < ApplicationController
       #user_id is the user ID associated with the adventure(s)
       user = User.find(params[:user_id])
       redirect_to root_path if !current_user?(user)
+    end
+
+    def adventure_params
+      params.require(:adventure).permit(:from, :to, :departure_time, :user, :user_id)
     end
 end

@@ -10,7 +10,7 @@ describe "adventures/new" do
       :departure_time => "MyString",
       :user => @user
     ).as_new_record)
-    view.stub!(:current_user).and_return(@user)
+    view.stub(:current_user).and_return(@user)
   end
 
   it "renders new adventure form" do

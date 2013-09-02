@@ -1,5 +1,5 @@
 class ConversationUserMap < ActiveRecord::Base
-  attr_accessible :conversation, :user
+  #attr_accessible :conversation, :user
 
   belongs_to :conversation
   belongs_to :user

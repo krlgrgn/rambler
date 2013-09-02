@@ -1,5 +1,5 @@
 class ConversationMailboxMap < ActiveRecord::Base
-  attr_accessible :mailbox, :conversation
+  #attr_accessible :mailbox, :conversation
 
   belongs_to :mailbox
   belongs_to :conversation

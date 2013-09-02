@@ -1,17 +1,13 @@
 Quest::Application.routes.draw do
 
-
   resources :messages
-
-
   resources :conversations
-
 
   # This hits /
   root to: "static_pages#home"
 
   # Static pages.
-  match "help" => "static_pages#help"
+  get "help" => "static_pages#help"
 
   # Users # Adventures
   resources :users do
@@ -20,17 +16,17 @@ Quest::Application.routes.draw do
   end
 
   # Sign up
-  match "signup" => "users#new"
+  get "signup" => "users#new"
 
   # Sign in
   resources :sessions, only: [:new, :create, :destroy]
-  match "signin" => "sessions#new"
-  match "signout" => "sessions#destroy", via: :delete
+  get"signin" => "sessions#new"
+  delete "signout" => "sessions#destroy"
+
   # Facebook authentication
-  match "auth/:provider/callback" => "sessions#fb_create",
-        via: :get,
+  get "auth/:provider/callback" => "sessions#fb_create",
         as: :fb_create
-  match "auth/failure" => "static_pages#home"
+  get "auth/failure" => "static_pages#home"
 
   # Password reset routes.
   resources :password_resets

@@ -1,7 +1,7 @@
 class Message < ActiveRecord::Base
-  attr_accessible :body,
-                  :user, :user_id,
-                  :conversation, :conversation_id
+  #attr_accessible :body,
+  #                :user, :user_id,
+  #                :conversation, :conversation_id
 
   # Validations
   validates :body, presence: true

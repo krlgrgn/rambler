@@ -86,8 +86,8 @@ describe "Adventures" do
     context "as a signed in user" do
       it "responds with a 200 status" do
         cookies['session_token'] = @user.session_token
-        Adventure.any_instance.should_receive(:update_attributes).with({ "state" => "a state" })
-        put user_adventure_path(@user, @adventure), {:id => @adventure.to_param, :adventure => { "state" => "a state" }, :user_id => @user.id}
+        Adventure.any_instance.should_receive(:update_attributes).with({ "from" => "a state" })
+        put user_adventure_path(@user, @adventure), {:id => @adventure.to_param, :adventure => { :from => "a state" }, :user_id => @user.id}
         response.status.should be(200)
       end
     end

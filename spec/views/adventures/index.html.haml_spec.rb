@@ -17,7 +17,7 @@ describe "adventures/index" do
         :user => @user
       )
     ])
-    view.stub!(:current_user).and_return(@user)
+    view.stub(:current_user).and_return(@user)
   end
 
   it "renders a list of adventures" do

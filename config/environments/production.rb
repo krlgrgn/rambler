@@ -68,4 +68,6 @@ Quest::Application.configure do
   # Action mailer configuration
   # TODO: Set up correct host
   config.action_mailer.default_url_options = { host: "localhost:8080" }
+
+  config.eager_load = true
 end

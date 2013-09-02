@@ -1,8 +1,4 @@
 class User < ActiveRecord::Base
-  attr_accessible :about, :city, :country, :email, :first_name, :last_name,
-                  :state, :password, :password_confirmation, :session_token,
-                  :uid, :image, :provider
-
   EMAIL_REGEXP = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
 
 

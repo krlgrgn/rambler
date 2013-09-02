@@ -81,7 +81,7 @@ describe SessionsController do
     before :each do
       @user = User.create! valid_attributes
       cookies['session_token'] = @user.session_token
-      controller.stub!(:current_user).and_return(@user)
+      controller.stub(:current_user).and_return(@user)
       delete :destroy, {}
     end
     it "should sign out the user" do

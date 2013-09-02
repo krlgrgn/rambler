@@ -1,5 +1,5 @@
 class Mailbox < ActiveRecord::Base
-  attr_accessible :user_id, :user
+  #attr_accessible :user_id, :user
 
   # Validations
   validates :user_id, presence: true

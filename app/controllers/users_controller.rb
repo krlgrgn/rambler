@@ -44,7 +44,7 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
 
     respond_to do |format|
       if @user.save
@@ -66,7 +66,7 @@ class UsersController < ApplicationController
     # @user is assigned in the before filter method forthis action.
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
+      if @user.update_attributes(user_params)
         sign_in @user
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { head :no_content }
@@ -100,5 +100,12 @@ class UsersController < ApplicationController
     def correct_user
       @user = User.find(params[:id])
       redirect_to root_path if !current_user?(@user)
+    end
+
+    def user_params
+      params.require(:user).permit(:about, :city, :country, :email, :first_name,
+                           :last_name, :state, :password, 
+                           :password_confirmation, 
+                           :session_token, :uid, :image, :provider)
     end
 end

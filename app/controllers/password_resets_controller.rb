@@ -31,7 +31,7 @@ class PasswordResetsController < ApplicationController
    @user = User.find_by_password_reset_token(params[:id])
 
    respond_to do |format|
-     if @user and @user.update_attributes(params[:user])
+     if @user and @user.update_attributes(user_params)
        format.html { redirect_to root_path, notice: "Password was successfully reset." }
        format.json { head :no_content }
      else
@@ -40,4 +40,12 @@ class PasswordResetsController < ApplicationController
      end
    end
   end
+
+  private
+    def user_params
+      params.require(:user).permit(:about, :city, :country, :email, :first_name,
+                           :last_name, :state, :password, 
+                           :password_confirmation, 
+                           :session_token, :uid, :image, :provider)
+    end
 end

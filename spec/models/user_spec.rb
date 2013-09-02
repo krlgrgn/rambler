@@ -125,7 +125,7 @@ describe User do
       end
       it "returns a FB user specified by the omniatuh response from FB" do
         user = FactoryGirl.create(:user, provider: "facebook", uid: 1337)
-        User.from_omniauth(@auth). should eq(user)
+        User.from_omniauth(@auth).should eq(user)
       end
     end
   end

@@ -93,14 +93,14 @@ describe UsersController do
       it "assigns a newly created but unsaved user as @user" do
         # Trigger the behavior that occurs when invalid params are submitted
         User.any_instance.stub(:save).and_return(false)
-        post :create, {:user => {  }}, valid_session
+        post :create, {:user => valid_attributes}, valid_session
         assigns(:user).should be_a_new(User)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         User.any_instance.stub(:save).and_return(false)
-        post :create, {:user => {  }}, valid_session
+        post :create, {:user => valid_attributes}, valid_session
         response.should render_template("new")
       end
     end
@@ -139,14 +139,14 @@ describe UsersController do
       it "assigns the user as @user" do
         # Trigger the behavior that occurs when invalid params are submitted
         User.any_instance.stub(:save).and_return(false)
-        put :update, {:id => @user.to_param, :user => {  }}
+        put :update, {:id => @user.to_param, :user => @user.attributes}
         assigns(:user).should eq(@user)
       end
 
       it "re-renders the 'edit' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         User.any_instance.stub(:save).and_return(false)
-        put :update, {:id => @user.to_param, :user => {  }}
+        put :update, {:id => @user.to_param, :user => @user.attributes}
         response.should render_template("edit")
       end
     end
