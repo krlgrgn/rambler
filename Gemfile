@@ -9,7 +9,6 @@ gem 'rails', '4'
 # in production environments by default.
 gem 'sass-rails'
 
-gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem 'flat-ui-rails'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
