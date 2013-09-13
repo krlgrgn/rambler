@@ -9,8 +9,6 @@ gem 'rails', '4'
 # in production environments by default.
 gem 'sass-rails'
 
-gem 'flat-ui-rails'
-
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', :platforms => :ruby
 
@@ -50,3 +48,7 @@ gem 'bcrypt-ruby', '= 3.0.0'
 gem 'omniauth-facebook'
 
 gem 'turbolinks'
+
+gem 'compass-rails', '~> 2.0.alpha.0'
+
+gem 'furatto', git: 'git@github.com:IcaliaLabs/furatto-rails.git'
