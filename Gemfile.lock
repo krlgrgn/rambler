@@ -1,8 +1,9 @@
 GIT
-  remote: git@github.com:IcaliaLabs/furatto-rails.git
-  revision: 98c2a1217814113640ad1c37649a96af4719d3ff
+  remote: git@github.com:krlgrgn/twitter-bootstrap3-rails.git
+  revision: 9d7b8a82f221077f9f59d6a2bc249b7bed81a5ec
   specs:
-    furatto (0.0.1)
+    twitter_bootstrap3_rails (0.0.1)
+      rails (~> 4.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -188,7 +189,6 @@ DEPENDENCIES
   compass-rails (~> 2.0.alpha.0)
   factory_girl_rails
   faker
-  furatto!
   haml-rails
   jquery-rails
   omniauth-facebook
@@ -198,5 +198,6 @@ DEPENDENCIES
   sass-rails
   therubyracer
   turbolinks
+  twitter_bootstrap3_rails!
   uglifier (>= 1.0.3)
   unicorn

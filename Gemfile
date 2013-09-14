@@ -51,4 +51,4 @@ gem 'turbolinks'
 
 gem 'compass-rails', '~> 2.0.alpha.0'
 
-gem 'furatto', git: 'git@github.com:IcaliaLabs/furatto-rails.git'
+gem 'twitter_bootstrap3_rails', git: 'git@github.com:krlgrgn/twitter-bootstrap3-rails.git'

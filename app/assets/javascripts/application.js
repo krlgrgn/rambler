@@ -12,6 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require furatto
+//= require twitter_bootstrap3_rails
 //= require_tree .
 //= require turbolinks
