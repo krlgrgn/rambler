@@ -1,0 +1,20 @@
+<p id="notice">
+  <%= notice %>
+</p>
+
+<p>
+  <b>From:</b>
+  <%= @adventure.from %>
+</p>
+<p>
+  <b>To:</b>
+  <%= @adventure.to %>
+</p>
+<p>
+  <b>Departure Time:</p>
+  <%= @adventure.departure_time %>
+</p>
+
+<%= link_to 'Edit', edit_user_adventure_path(@user, @adventure) %>
+
+<%= link_to 'Back', user_adventures_path(@user) %>

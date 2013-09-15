@@ -1,0 +1,25 @@
+<%= form_for @message, :html => {:class => "form-horizontal"} do |f| %>
+  <% if @message.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= "#{pluralize(@message.errors.count, "error")} prohibited this user from being saved:" %></h2>
+      <ul>
+        <% @message.errors.full_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+    </ul>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <div class="col-lg-10">
+      <%= f.text_field :body, class: "form-control", placeholder: "Message" %>
+  </div>
+  </div>
+
+  <%= hidden_field_tag :recipient, @message.to_param %>
+
+  <div class="form-group">
+    <div class="col-lg-10">
+        <%= f.submit 'Send', class: "btn btn-info" %>
+    </div>
+  </div>
+<% end %>

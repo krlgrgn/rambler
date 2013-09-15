@@ -1,0 +1,12 @@
+<%= form_for :password_reset, url: password_resets_path, method: :post, :html => {:class => "form-horizontal"} do |f| %>
+  <div class="form-group">
+    <div class="col-lg-10">
+      <%= f.text_field :email, class: "form-control", placeholder: "Email" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-10">
+      <%= f.submit 'Reset Password', class: "btn btn-info" %>
+    </div>
+  </div>
+<% end %>

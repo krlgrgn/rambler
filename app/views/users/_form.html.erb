@@ -1,0 +1,66 @@
+<%= form_for @user, :html => {:class => "form-horizontal"} do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:" %></h2>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+    </ul>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <div class="col-lg-10">
+      <%= f.text_field :email, class: "form-control", placeholder: "Email" %>
+  </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-10">
+      <%= f.text_field :first_name , class: "form-control", placeholder: "First Name"%>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-10">
+      <%= f.text_field :last_name, class: "form-control", placeholder: "Last Name"%>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-10">
+      <%= f.text_field :city, class: "form-control", placeholder: "City"%>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-10">
+      <%= f.text_field :state, class: "form-control", placeholder: "State"%>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-10">
+      <%= f.text_field :about, class: "form-control", placeholder: "About"%>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-10">
+      <%= f.text_field :country, class: "form-control", placeholder: "Country"%>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-10">
+      <%= f.text_field :password, class: "form-control", placeholder: "Password"%>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-10">
+      <%= f.text_field :password_confirmation, class: "form-control", placeholder: "Password Confirmation" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-10">
+      <% if @user.new_record? %>
+        <%= f.submit 'Sign up', class: "btn btn-info" %>
+      <% else %>
+        <%= f.submit 'Save', class: "btn btn-info" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

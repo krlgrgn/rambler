@@ -1,0 +1,22 @@
+<h1>Listing adventures</h1>
+
+<table>
+  <tr>
+    <th>From</th>
+    <th>To</th>
+    <th>Departure Time</th>
+  </tr>
+
+  <% @adventures.each do |adventure| %>
+    <tr>
+      <td><%= adventure.from %></td>
+      <td><%= adventure.to %></td>
+      <td><%= adventure.departure_time %></td>
+      <td><%= link_to 'Show', user_adventure_path(@user, adventure) %></td>
+      <td><%= link_to 'Edit', edit_user_adventure_path(@user, adventure) %></td>
+      <td><%= user_adventure_path(@user, adventure), method: :delete, data: { confirm: 'Are you sure?' } %> </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'New User', new_adventure_path %>

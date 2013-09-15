@@ -1,0 +1,17 @@
+<p id="notice">
+  <%= notice %>
+</p>
+
+<p>
+  <b> User: </b>
+  <% @mailbox.conversations.each do |conversation| %>
+    <h3> Conversation </h3>
+    <%= conversation.id %>
+    <% conversation.messages.each do |message| %>
+      <%= message.user_id %>
+      <%= message.body %>
+    <% end %>
+  <% end %>
+</p>
+
+<%= link_to 'Back', user_path(current_user) %>
