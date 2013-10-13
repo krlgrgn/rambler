@@ -14,7 +14,9 @@ describe UserMailer do
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("UserMailer#reset_password\r\nClick the link to reset your password:\r\n<a href=\"http://localhost:8080/password_resets/askdjahsdkjahuw382923h/edit\">Reset Password</a>\r\n")
+      mail.body.encoded.should match("UserMailer#reset_password\r\n\r\nClick the " +
+        "link to reset your password:\r\n\r\n<a href=\"http://localhost:8080/pass" +
+        "word_resets/askdjahsdkjahuw382923h/edit\">Reset Password</a>\r\n")
     end
   end
 

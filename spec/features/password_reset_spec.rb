@@ -7,7 +7,7 @@ describe "Password Reset" do
     end
     it "brings the user to the password reset page" do
       click_link "Forgot Password"
-      page.should have_content "Email"
+      page.should have_field "Email"
     end
   end
   describe "visiting the reset password request page" do
@@ -18,7 +18,7 @@ describe "Password Reset" do
     it "redirects to the root page when a user fills out the email form" do
       fill_in "Email", with: @user.email
       click_button "Reset Password"
-      page.should have_content "Home Help Sign up Sign in Sigin in with Facebook Create amazing adventures and meet new people!"
+      page.should have_content "Quest Sign up Sign in Sigin in with Facebook Create amazing adventures and meet new people!"
     end
   end
   describe "visiting the password reset page" do
@@ -33,10 +33,10 @@ describe "Password Reset" do
       visit edit_password_reset_path(@token)
 
       fill_in "Password", with: "12345678"
-      fill_in "Confirmation", with: "12345678"
+      fill_in "Password Confirmation", with: "12345678"
 
       click_button "Save"
-      page.should have_content "Home Help Sign up Sign in Sigin in with Facebook Create amazing adventures and meet new people!"
+      page.should have_content "Quest Sign up Sign in Sigin in with Facebook Create amazing adventures and meet new people!"
     end
   end
 end

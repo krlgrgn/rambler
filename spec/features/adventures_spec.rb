@@ -68,7 +68,7 @@ describe "Adventures" do
         end
         it "does not allow the user to edit the adventure" do
           click_link "Edit"
-          page.should have_content "Home Help Sign out Messages Create amazing adventures and meet new people!"
+          page.should have_content "Quest Sign out Messages Create amazing adventures and meet new people!"
         end
       end
       context "administrator" do
@@ -105,7 +105,7 @@ describe "Adventures" do
           click_link "New Adventure"
           fill_in "From", with: "Dublin"
           fill_in "To", with: "Maynooth"
-          fill_in "Departure time", with: nil
+          fill_in "Departure Time", with: nil
           click_button "Save"
         }.to change(Adventure, :count).by(1)
         page.should have_content "Adventure was successfully created."
@@ -155,7 +155,7 @@ describe "Adventures" do
         end
         it "does not allow the user to delete another users" do
           expect { click_link "Destroy"}.to change(Adventure, :count).by(0)
-          page.should have_content "ome Help Sign out Messages Create amazing adventures and meet new people!"
+          page.should have_content "Quest Sign out Messages Create amazing adventures and meet new people!"
         end
       end
       context "administrator" do
