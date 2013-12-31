@@ -49,6 +49,6 @@ gem 'omniauth-facebook'
 
 gem 'turbolinks'
 
-gem 'compass-rails', '~> 2.0.alpha.0'
+gem 'compass-rails'
 
-gem 'twitter_bootstrap3_rails', git: 'git@github.com:krlgrgn/twitter-bootstrap3-rails.git'
+gem 'twitter_bootstrap3_rails', git: 'https://github.com/krlgrgn/twitter-bootstrap3-rails.git'
