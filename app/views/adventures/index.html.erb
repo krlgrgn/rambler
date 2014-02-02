@@ -14,9 +14,13 @@
       <td><%= adventure.departure_time %></td>
       <td><%= link_to 'Show', user_adventure_path(@user, adventure) %></td>
       <td><%= link_to 'Edit', edit_user_adventure_path(@user, adventure) %></td>
-      <td><%= user_adventure_path(@user, adventure), method: :delete, data: { confirm: 'Are you sure?' } %> </td>
+      <td><%= link_to 'Destroy', user_adventure_path(
+                                   @user,
+                                   adventure),
+                                   method: :delete,
+                                   data: { confirm: 'Are you sure?' } %> </td>
     </tr>
   <% end %>
 </table>
 
-<%= link_to 'New User', new_adventure_path %>
+<%= link_to 'New Adventure', new_user_adventure_path(@user) %>

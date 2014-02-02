@@ -46,14 +46,13 @@ class AdventuresController < ApplicationController
 
   # GET /adventures/1/edit
   def edit
-    @user = User.find(params[:user_id])
     @adventure = @user.adventures.find(params[:id])
   end
 
   # POST /adventures
   # POST /adventures.json
   def create
-    @user = User.find(params[:user_id])
+    #@user = User.find(params[:user_id])
     @adventure = @user.adventures.build(adventure_params)
 
     respond_to do |format|
@@ -70,7 +69,6 @@ class AdventuresController < ApplicationController
   # PUT /adventures/1
   # PUT /adventures/1.json
   def update
-    @user = User.find(params[:user_id])
     @adventure = @user.adventures.find(params[:id])
 
     respond_to do |format|
@@ -87,7 +85,6 @@ class AdventuresController < ApplicationController
   # DELETE /adventures/1
   # DELETE /adventures/1.json
   def destroy
-    @user = User.find(params[:user_id])
     @adventure = @user.adventures.find(params[:id])
     @adventure.destroy
 
@@ -107,8 +104,13 @@ class AdventuresController < ApplicationController
 
     def correct_user
       #user_id is the user ID associated with the adventure(s)
+      # i.e. the guy that created the adventure.
       user = User.find(params[:user_id])
-      redirect_to root_path if !current_user?(user)
+      if !current_user?(user)
+        redirect_to root_path
+      else
+        @user = user
+      end
     end
 
     def adventure_params
