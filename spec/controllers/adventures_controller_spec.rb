@@ -81,13 +81,12 @@ describe AdventuresController do
   end
 
   describe "GET edit" do
-    pending "assigns the user that created the adventure as @user"
+    it "assigns the user that created the adventure as @user" do
     # This is pending because i am thinking of assigning @user in the correct_user filter.
-      #creating_user = FactoryGirl.create(:user)
-      #adventure = FactoryGirl.create(:adventure, :user_id => creating_user.id)
-      #get :edit, { :id => adventure.to_param, :user_id => creating_user.id }
-      #assigns(:user).should eq(creating_user)
-    #end
+      adventure = FactoryGirl.create(:adventure, :user_id => @user.id)
+      get :edit, { :id => adventure.to_param, :user_id => adventure.user_id }
+      assigns(:user).should eq(@user)
+    end
     it "assigns the requested adventure as @adventure" do
       adventure = Adventure.create! valid_attributes
       get :edit, {:id => adventure.to_param, :user_id => @user.id}, valid_session

@@ -47,12 +47,6 @@ describe "Password Resets" do
           :id => @token, :user => { "state" => "new_state" }}
         response.status.should be(200)
       end
-      pending "Write request test where the find by reset token fails"
-      #it "responds with a 200 status when the token is invalid" do
-        #invalid_token = "invalid_token"
-        #put password_reset_path(invalid_token), {
-          #:id => invalid_token, :user => { "state" => "new_state" }}
-        #response.status.should be(200)
     end
   end
 end
