@@ -57,18 +57,22 @@ describe User do
     FactoryGirl.build(:user, password: " ", password_confirmation: " ").should_not be_valid
   end
 
-  it "is invald if a user is create with admin as a parameter" do
-    FactoryGirl.build(:user).admin.should be_nil
+  it "is invald if a user is created with an administrator role" do
+      user = FactoryGirl.create(:user)
+      user.roles.map { |r| r.role }
+      admin = Role.find_by_role("admin")
+      user.reload.roles.should_not include(admin)
   end
 
   describe "with admin attr set to true" do
     before :each do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryGirl.create(:admin)
     end
 
     it "should be an administrator" do
-      @user.toggle!(:admin)
-      @user.reload.admin.should eq true
+      @user.roles.map { |r| r.role }
+      admin = Role.find_by_role("admin")
+      @user.reload.roles.should include(admin)
     end
   end
 

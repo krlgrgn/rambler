@@ -71,6 +71,7 @@ describe "Adventures" do
     end
     context "as a signed in user" do
       it "responds with a 200 status" do
+        cookies['session_token'] = @user.session_token
         post user_adventures_path(@user), { :adventure => @new_adventure, :user_id => @user.id }, {}
         response.status.should be(302)
       end
@@ -93,7 +94,7 @@ describe "Adventures" do
     end
     context "as a non-signed in user" do
       it "responds with a 302 status" do
-        put user_adventure_path(@user, @adventure), {:id => @adventure.to_param, :user => { "state" => "a state" }, :user_id => @user.id}
+        put user_adventure_path(@user, @adventure), {:id => @adventure.to_param, :adventure => { "state" => "a state" }, :user_id => @user.id}
         response.status.should be(302)
       end
     end

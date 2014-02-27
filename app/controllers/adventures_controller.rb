@@ -1,13 +1,17 @@
 class AdventuresController < ApplicationController
-  before_filter :signed_in_user
-  before_filter :correct_user, only: [:edit, :update, :destroy, :create]
+  before_filter :adventure_params, :only => [:create, :update]
+  
+  #
+  # This is a declarative authorization method that acts as
+  # a before filter. It loads the single resource, an adventure in this case, and
+  # checks the access on it.
+  # It only operates on the CRUD operations: show, new, edit, create, udpdate.
+  #
+  filter_resource_access
 
   # GET /users/1/adventures
   # GET /users/1/adventures.json
   def index
-    # Assigning @user as the current user and then looking up the adventures
-    # that the user has will always return the currently signed in users
-    # adventures regardless of the user_id passed in the url/params.
     @user = User.find(params[:user_id])
     @adventures = @user.adventures
 
@@ -19,9 +23,8 @@ class AdventuresController < ApplicationController
 
   # GET /users/1/adventures/1
   # GET /users/1/adventures/1.json
-  def show
-    @user = User.find(params[:user_id])
-    @adventure = @user.adventures.find(params[:id])
+  def show    
+    @user = @adventure.user
 
     respond_to do |format|
       format.html # show.html.erb
@@ -29,13 +32,9 @@ class AdventuresController < ApplicationController
     end
   end
 
-  # GET /adventures/new
-  # GET /adventures/new.json
-  def new
-    @adventure = Adventure.new
-    # If we had used user_id as a parameter here, we could've created an adventure
-    # for the user specified by user_id, rather than the current user.
-    # TODO: I could use user_id here and let the correct_user filter handle it?
+  # GET users/1/adventures/new
+  # GET users/1/adventures/new.json
+  def new    
     @user = current_user
 
     respond_to do |format|
@@ -46,18 +45,17 @@ class AdventuresController < ApplicationController
 
   # GET /adventures/1/edit
   def edit
-    @adventure = @user.adventures.find(params[:id])
+    @user = @adventure.user
   end
 
   # POST /adventures
   # POST /adventures.json
-  def create
-    #@user = User.find(params[:user_id])
-    @adventure = @user.adventures.build(adventure_params)
+  def create    
+    @adventure.user = current_user
 
     respond_to do |format|
       if @adventure.save
-        format.html { redirect_to user_adventure_path(@user,@adventure), notice: 'Adventure was successfully created.' }
+        format.html { redirect_to user_adventure_path(@adventure.user,@adventure), notice: 'Adventure was successfully created.' }
         format.json { render json: @adventure, status: :created, location: @adventure }
       else
         format.html { render action: "new" }
@@ -69,7 +67,7 @@ class AdventuresController < ApplicationController
   # PUT /adventures/1
   # PUT /adventures/1.json
   def update
-    @adventure = @user.adventures.find(params[:id])
+    @user = @adventure.user
 
     respond_to do |format|
       if @adventure.update_attributes(adventure_params)
@@ -85,8 +83,8 @@ class AdventuresController < ApplicationController
   # DELETE /adventures/1
   # DELETE /adventures/1.json
   def destroy
-    @adventure = @user.adventures.find(params[:id])
     @adventure.destroy
+    @user = current_user
 
     respond_to do |format|
       format.html { redirect_to user_adventures_path(@user) }
@@ -114,6 +112,6 @@ class AdventuresController < ApplicationController
     end
 
     def adventure_params
-      params.require(:adventure).permit(:from, :to, :departure_time, :user, :user_id)
+      params.require(:adventure).permit!
     end
 end

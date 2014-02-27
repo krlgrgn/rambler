@@ -1,9 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+gem 'rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -43,7 +40,7 @@ gem 'pg'
 
 gem 'haml-rails'
 
-gem 'bcrypt-ruby', '= 3.0.0'
+gem 'bcrypt-ruby', '=3.0.0'
 
 gem 'omniauth-facebook'
 
@@ -52,3 +49,5 @@ gem 'turbolinks'
 gem 'compass-rails'
 
 gem 'twitter_bootstrap3_rails', git: 'https://github.com/krlgrgn/twitter-bootstrap3-rails.git'
+
+gem 'declarative_authorization'

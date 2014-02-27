@@ -62,12 +62,12 @@ describe "Users" do
   end
 
   describe "Authorisation" do
-    let(:user) { FactoryGirl.create(:user) }
 
     context "for non-signed in users" do
 
       describe "attempting to access a protected page" do
         before :each do
+          user = FactoryGirl.create(:user)
           visit edit_user_path(user)
           fill_in "Email", with: user.email
           fill_in "Password", with:  user.password
@@ -81,6 +81,7 @@ describe "Users" do
       end
 
       describe "visiting the edit page" do
+        let(:user) { FactoryGirl.create(:user) }
         before { visit edit_user_path(user) }
 
         it "should have a sign in link" do
@@ -99,14 +100,12 @@ describe "Users" do
     end
 
     context "for a signed in user" do
-      before :each do
-        sign_in user
-      end
-
 
       context "as a non administrative user" do
         describe "listing other users" do
          before :each do
+            user = FactoryGirl.create(:user)
+            sign_in user
             visit users_path
           end
           it "says listing users" do
@@ -121,8 +120,8 @@ describe "Users" do
 
       context "as an administrative user" do
         describe "listing other users" do
-          let(:admin) { FactoryGirl.create(:admin) }
           before :each do
+            admin = FactoryGirl.create(:admin)
             sign_in admin
             visit users_path
           end
@@ -141,27 +140,35 @@ describe "Users" do
       end
 
       context "as the incorrect user" do
-
-        describe "editing a users information"
-
-        it "redirects to the root page when the user tries to edit another user\'s information" do
-          page.should have_content "Sign out"
-          wrong_user = FactoryGirl.create(:user, email: "wrongemail@sample.com")
-          visit user_path(wrong_user) # Hits /users/:id
-          click_link "Edit"
-
-          # Verify
-          page.should have_content("Quest Sign out Messages Create amazing adventures and meet new people!")
+        before :each do
+          user = FactoryGirl.create(:user)
+          sign_in user
+          visit users_path
         end
+        describe "editing a users information"
+          it "redirects to the root page when the user tries to edit another user\'s information" do
+            page.should have_content "Sign out"
+            wrong_user = FactoryGirl.create(:user, email: "wrongemail@sample.com")
+            visit user_path(wrong_user) # Hits /users/:id
+            click_link "Edit"
+
+            # Verify
+            page.should have_content("Quest Sign out Messages Create amazing adventures and meet new people!")
+          end
       end
 
       context "as the correct user" do
 
+        before :each do
+          @user = FactoryGirl.create(:user)
+          sign_in @user
+          visit users_path
+        end
         describe "editing a users information"
 
           it "redirects to the users page after a succesful edit" do
             page.should have_content "Sign out"
-            visit user_path(user) # Hits /users/:id
+            visit user_path(@user) # Hits /users/:id
             click_link "Edit"
             page.should have_content "Editing user"
             fill_in "Email", with: "lol@lol.com"
@@ -170,7 +177,7 @@ describe "Users" do
             click_button "Save"
 
             # Verify
-            User.find(user.id).email.should eq("lol@lol.com")
+            User.find(@user.id).email.should eq("lol@lol.com")
           end
         end
       end

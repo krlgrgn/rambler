@@ -17,7 +17,10 @@ FactoryGirl.define do
     f.image                    { "https://www.google.ie/images/srpr/logo4w.png" }
 
     factory :admin do
-      admin true
+      after(:build) do |user, evaluator|
+        role = Role.find_by_role("admin")
+        FactoryGirl.create(:user_role_map, user: user, role: role)
+      end
     end
   end
 end

@@ -20,10 +20,13 @@ class User < ActiveRecord::Base
   before_save { |user| user.email = email.downcase }
   before_save :create_session_token
   after_create :create_mailbox
+  after_create :create_default_role
 
   # Relations
   has_many :adventures
   has_one  :mailbox
+  has_many :user_role_maps
+  has_many :roles, :through => :user_role_maps
 
   # Methods
   has_secure_password
@@ -77,6 +80,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def role_symbols
+    self.roles.map do |role|
+      role.role.underscore.to_sym
+    end
+  end
+
   # Private methods
   private
     def create_session_token
@@ -85,5 +94,10 @@ class User < ActiveRecord::Base
 
     def create_mailbox
       Mailbox.create!(user: self)
+    end
+
+    def create_default_role
+      UserRoleMap.create(role: Role.find_by_role("adventurer"),
+                         user: self)
     end
 end

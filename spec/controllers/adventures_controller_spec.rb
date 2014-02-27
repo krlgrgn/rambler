@@ -189,6 +189,7 @@ describe AdventuresController do
     it "redirects to the adventures list" do
       adventure = Adventure.create! valid_attributes
       delete :destroy, {:id => adventure.to_param, :user_id => @user.id}, valid_session
+      puts @user.id
       response.should redirect_to(user_adventures_path(@user))
     end
   end

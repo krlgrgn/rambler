@@ -21,16 +21,16 @@ describe "Adventures" do
         visit user_adventures_path(@user) # hits /users/:user_id/adventures
         page.should have_content "Listing adventures"
       end
-      context "administrator" do
-        before :each do
-          @user = FactoryGirl.create(:user)
-          @user.toggle!(:admin)
-          @adventure = FactoryGirl.create(:adventure)
-        end
-        it "lists the available adventures" do
-          visit user_adventures_path(@user) # hits /users/:user_id/adventures
-          page.should have_content "Listing adventures"
-        end
+    end
+    context "administrator" do
+      before :each do
+        @admin = FactoryGirl.create(:admin)
+        @adventure = FactoryGirl.create(:adventure)
+        sign_in @admin
+      end
+      it "lists the available adventures" do
+        visit user_adventures_path(@admin) # hits /users/:user_id/adventures
+        page.should have_content "Listing adventures"
       end
     end
   end
@@ -43,12 +43,10 @@ describe "Adventures" do
       end
     end
     context "as a signed in user" do
-      before :each do
-        @user = FactoryGirl.create(:user)
-        sign_in @user
-      end
       context "as the correct user" do
         before :each do
+          @user = FactoryGirl.create(:user)
+          sign_in @user
           @adventure = FactoryGirl.create(:adventure, user: @user)
           visit user_adventures_path(@user) # Hits /users/:user_id/adventures
         end
@@ -62,22 +60,27 @@ describe "Adventures" do
       end
       context "as the incorrect user" do
         before :each do
-          user = FactoryGirl.create(:user)
-          @adventure = FactoryGirl.create(:adventure, user: user)
-          visit user_adventures_path(user) # Hits /users/:user_id/adventures
+          @user = FactoryGirl.create(:user)
+          sign_in @user
+          other_user = FactoryGirl.create(:user)
+          @adventure = FactoryGirl.create(:adventure, user: other_user)
+          visit user_adventures_path(other_user) # Hits /users/:user_id/adventures
         end
         it "does not allow the user to edit the adventure" do
           click_link "Edit"
           page.should have_content "Quest Sign out Messages Create amazing adventures and meet new people!"
         end
       end
-      context "administrator" do
+      context "as an administrator" do
         before :each do
-          @user.toggle!(:admin)
+          @admin = FactoryGirl.create(:admin)
+          sign_in @admin
+          other_user = FactoryGirl.create(:user)
+          @adventure = FactoryGirl.create(:adventure, user: other_user)
+          visit user_adventures_path(@admin) # Hits /users/:user_id/adventures
         end
         it "does not allow the admin to edit the adventure" do
-          click_link "Edit"
-          page.should_not have_content "Editing adventure"
+          page.should_not have_content "Edit"
         end
       end
     end
@@ -158,16 +161,16 @@ describe "Adventures" do
           page.should have_content "Quest Sign out Messages Create amazing adventures and meet new people!"
         end
       end
-      context "administrator" do
+      context "as an administrator" do
         before :each do
-          @user.toggle!(:admin)
+          admin = FactoryGirl.create(:admin)
           other_user = FactoryGirl.create(:user)
           FactoryGirl.create(:adventure, user: other_user)
-          sign_in @user
+          sign_in admin
           visit user_adventures_path(other_user) # Hits /users/:user_id/adventures
         end
-        it "does not allow the admin to destroy an adventure" do
-          expect { click_link "Destroy" }.to change(Adventure, :count).by(0)
+        it "allows the admin to destroy an adventure" do
+          expect { click_link "Destroy" }.to change(Adventure, :count).by(-1)
         end
       end
     end
