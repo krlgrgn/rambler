@@ -19,8 +19,8 @@ test:
 
 production:
   adapter: postgresql
-  database: rambler_prod
-  username: rambler
-  password: rambler
+  database: questing
+  username: questing
+  password: questing
   pool: 5
   timeout: 5000
