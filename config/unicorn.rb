@@ -1,6 +1,6 @@
 # Set the working application directory
 # working_directory "/path/to/your/app"
-working_directory "/home/ubuntu/web/www.questing.me"
+working_directory "/home/ubuntu/web/www.questing.me/app"
 
 # Number of processes
 worker_processes 3
