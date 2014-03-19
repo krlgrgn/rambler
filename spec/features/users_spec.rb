@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "Users" do
-
   describe "signup" do
     context "as a normal user" do
       before :each do
@@ -62,20 +61,15 @@ describe "Users" do
   end
 
   describe "Authorisation" do
-
     context "for non-signed in users" do
-
       describe "attempting to access a protected page" do
         before :each do
           user = FactoryGirl.create(:user)
-          visit edit_user_path(user)
-          fill_in "Email", with: user.email
-          fill_in "Password", with:  user.password
-          click_button "Sign in"
+          visit edit_user_path(user)          
         end
 
         it "should render the desired page after signin in" do
-          page.should have_content "Editing user"
+          page.should have_content "Sign in"
         end
 
       end
@@ -100,7 +94,6 @@ describe "Users" do
     end
 
     context "for a signed in user" do
-
       context "as a non administrative user" do
         describe "listing other users" do
          before :each do
@@ -110,10 +103,7 @@ describe "Users" do
           end
           it "says listing users" do
             page.should have_content "Listing users"
-          end
-          it "does not display the destroy link" do
-            page.should_not have_content "Destroy"
-          end
+          end          
         end
       end
 
@@ -158,14 +148,12 @@ describe "Users" do
       end
 
       context "as the correct user" do
-
         before :each do
           @user = FactoryGirl.create(:user)
           sign_in @user
           visit users_path
         end
         describe "editing a users information"
-
           it "redirects to the users page after a succesful edit" do
             page.should have_content "Sign out"
             visit user_path(@user) # Hits /users/:id

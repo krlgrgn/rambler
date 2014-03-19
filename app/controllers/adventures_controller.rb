@@ -100,17 +100,6 @@ class AdventuresController < ApplicationController
       end
     end
 
-    def correct_user
-      #user_id is the user ID associated with the adventure(s)
-      # i.e. the guy that created the adventure.
-      user = User.find(params[:user_id])
-      if !current_user?(user)
-        redirect_to root_path
-      else
-        @user = user
-      end
-    end
-
     def adventure_params
       params.require(:adventure).permit!
     end

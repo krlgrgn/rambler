@@ -7,6 +7,7 @@ describe "users/index" do
       stub_model(User)
     ])
 
+    user = stub_model(User)
   end
 
   it "renders a list of users" do

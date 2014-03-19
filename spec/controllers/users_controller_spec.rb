@@ -153,18 +153,19 @@ describe UsersController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested user" do
-      user = User.create! valid_attributes
-      user.authenticate(user.password)
+    before :each do
+      @user = User.create! valid_attributes
+      sign_in @user
+      cookies['session_token'] = @user.session_token
+    end
+    it "destroys the requested user" do      
       expect {
-        delete :destroy, {:id => user.to_param}, valid_session
+        delete :destroy, {:id => @user.to_param}, valid_session
       }.to change(User, :count).by(-1)
     end
 
     it "redirects to the users list" do
-      user = User.create! valid_attributes
-      user.authenticate(user.password)
-      delete :destroy, {:id => user.to_param}, valid_session
+      delete :destroy, {:id => @user.to_param}, valid_session
       response.should redirect_to(users_url)
     end
   end
